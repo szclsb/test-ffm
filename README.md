@@ -4,7 +4,7 @@
 
 * CLI:
   ```
-  java --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign Main.java
+  java --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign ch.szclsb.test.ffm.Main.java
   ```
 * Intellij: Add VM Options
   ```

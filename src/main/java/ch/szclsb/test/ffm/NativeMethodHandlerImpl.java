@@ -1,5 +1,7 @@
 package ch.szclsb.test.ffm;
 
+import ch.szclsb.test.ffm.export.INativeMethodHandler;
+
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 

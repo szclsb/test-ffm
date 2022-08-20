@@ -1,9 +1,6 @@
 package ch.szclsb.test.ffm;
 
-import java.lang.foreign.FunctionDescriptor;
-import java.lang.foreign.Linker;
-import java.lang.foreign.MemorySegment;
-import java.lang.foreign.SymbolLookup;
+import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 
 public class NativeMethodHandlerImpl implements INativeMethodHandler {
@@ -15,15 +12,22 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
     }
 
     private final MethodHandle printHelloNative;
+    private final MethodHandle vec4addNative;
 
     public NativeMethodHandlerImpl() {
         var dir = System.getProperty("user.dir");
         System.load(dir + "/lib/test_ffm_native.dll");
         this.printHelloNative = LINKER.downcallHandle(loadSymbol("printHello"), FunctionDescriptor.ofVoid());
+        this.vec4addNative = LINKER.downcallHandle(loadSymbol("vec4add"), FunctionDescriptor.ofVoid(ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS));
     }
 
     @Override
     public void printHello() throws Throwable {
         printHelloNative.invoke();
+    }
+
+    @Override
+    public void vec4add(Vector4 a, Vector4 b, Vector4 r) throws Throwable {
+        vec4addNative.invoke(a.getAddress(), b.getAddress(), r.getAddress());
     }
 }

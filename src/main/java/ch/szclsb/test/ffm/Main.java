@@ -4,10 +4,13 @@ import java.lang.foreign.MemorySession;
 
 public class Main {
     public static void main(String[] args) throws Throwable {
-        var nativeMethodHandler = new NativeMethodHandlerImpl();
-        nativeMethodHandler.printHello();
 
         try(var session = MemorySession.openShared()) {
+            var nativeMethodHandler = new NativeMethodHandlerImpl(session);
+            nativeMethodHandler.printHello();
+
+            nativeMethodHandler.passHello();
+
             var a = new Vector4(session);
             var b = new Vector4(session);
             var r = new Vector4(session);

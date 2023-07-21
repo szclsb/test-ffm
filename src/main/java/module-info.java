@@ -1,3 +1,3 @@
-module ch.szclsb.test.ffm {
+module ch.szclsb.main.ffm {
 
 }

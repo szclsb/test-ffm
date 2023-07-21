@@ -1,6 +1,6 @@
-package ch.szclsb.test.ffm.export;
+package ch.szclsb.main.ffm.export;
 
-import ch.szclsb.test.ffm.Vector4;
+import ch.szclsb.main.ffm.Vector4;
 
 public interface INativeMethodHandler {
     void printHello() throws Throwable;

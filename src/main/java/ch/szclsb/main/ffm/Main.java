@@ -1,11 +1,11 @@
-package ch.szclsb.test.ffm;
+package ch.szclsb.main.ffm;
 
-import java.lang.foreign.MemorySession;
+import java.lang.foreign.Arena;
 
 public class Main {
     public static void main(String[] args) throws Throwable {
 
-        try(var session = MemorySession.openShared()) {
+        try(var session = Arena.openShared()) {
             var nativeMethodHandler = new NativeMethodHandlerImpl(session);
             nativeMethodHandler.printHello();
 

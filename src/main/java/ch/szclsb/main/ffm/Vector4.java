@@ -1,4 +1,4 @@
-package ch.szclsb.test.ffm;
+package ch.szclsb.main.ffm;
 
 import java.lang.foreign.*;
 
@@ -8,8 +8,8 @@ public class Vector4 {
 
     private final MemorySegment segment;
 
-    public Vector4(MemorySession session) {
-        this.segment = MemorySegment.allocateNative(SEQUENCE_LAYOUT, session);
+    public Vector4(Arena session) {
+        this.segment = MemorySegment.allocateNative(SEQUENCE_LAYOUT, session.scope());
     }
 
     public void setValues(float x, float y, float z, float w) {
@@ -19,8 +19,8 @@ public class Vector4 {
         segment.set(VALUE_LAYOUT, 12, w);
     }
 
-    public MemoryAddress getAddress() {
-        return segment.address();
+    protected MemorySegment getAddress() {
+        return segment;
     }
 
     public float[] toArray() {

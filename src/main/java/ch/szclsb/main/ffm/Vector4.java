@@ -8,8 +8,8 @@ public class Vector4 {
 
     private final MemorySegment segment;
 
-    public Vector4(Arena session) {
-        this.segment = MemorySegment.allocateNative(SEQUENCE_LAYOUT, session.scope());
+    public Vector4(SegmentAllocator allocator) {
+        this.segment = allocator.allocate(SEQUENCE_LAYOUT);
     }
 
     public void setValues(float x, float y, float z, float w) {
@@ -19,8 +19,8 @@ public class Vector4 {
         segment.set(VALUE_LAYOUT, 12, w);
     }
 
-    protected MemorySegment getAddress() {
-        return segment;
+    protected MemorySegment getSegment() {
+        return segment.asReadOnly();
     }
 
     public float[] toArray() {

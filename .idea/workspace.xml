@@ -5,22 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aca7e4cd-db20-47a4-b9cd-6e61d5520f00" name="Changes" comment="impl native upcall">
-      <change afterPath="$PROJECT_DIR$/build-native.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/native/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/native/cpp/ffm_library.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/native/include/ffm_library.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/PointNative.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/test_ffm_native.dll" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/test/ffm/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/test/ffm/NativeMethodHandlerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/NativeMethodHandlerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/test/ffm/Vector4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/Vector4.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/test/ffm/export/INativeMethodHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/INativeMethodHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/native/cpp/ffm_library.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/native/cpp/ffm_library.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/native/include/ffm_library.h" beforeDir="false" afterPath="$PROJECT_DIR$/native/include/ffm_library.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/NativeMethodHandlerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/NativeMethodHandlerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/Vector4.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/Vector4.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/INativeMethodHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/INativeMethodHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,8 +67,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="module-info" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -79,30 +78,37 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 2
+}]]></component>
   <component name="ProjectId" id="2DMEvyVpjpxBIFbEiyIXE4T1hZE" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;19&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Projects/test-ffm&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;quarkus&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Upgrade Gradle wrapper.executor": "Run",
+    "Gradle.test-ffm [:ch.szclsb.main.ffm.Main.main()].executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "jdk.selected.JAVA_MODULE": "19",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Projects/test-ffm",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Projects\test-ffm\lib" />
@@ -119,7 +125,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="ch.szclsb.main.ffm.Main" />
       <module name="ffm.main" />
-      <option name="VM_PARAMETERS" value="--enable-preview --enable-native-access=ch.szclsb.main.ffm" />
+      <option name="VM_PARAMETERS" value="--enable-preview --enable-native-access=ALL-UNNAMED" />
       <extension name="net.ashald.envfile">
         <option name="IS_ENABLED" value="false" />
         <option name="IS_SUBST" value="false" />
@@ -158,7 +164,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="test-ffm [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -180,7 +186,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="test-ffm [compileJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -202,16 +208,7 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <ForceTestExec>false</ForceTestExec>
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-      <option name="AUTO_RESTART" value="false" />
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <list>
@@ -228,6 +225,14 @@
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -256,6 +261,7 @@
       <workItem from="1689869144431" duration="2354000" />
       <workItem from="1689927863505" duration="1469000" />
       <workItem from="1689929343487" duration="1820000" />
+      <workItem from="1742731405428" duration="4130000" />
     </task>
     <task id="LOCAL-00001" summary="removed gradle support, since gradle 7.5.1 does not support java 19">
       <created>1660984159964</created>

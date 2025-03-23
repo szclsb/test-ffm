@@ -17,3 +17,12 @@ void vec4add(const float *a, const float *b, float *r) {
     *(r+2) = *(a+2) + *(b+2);
     *(r+3) = *(a+3) + *(b+3);
 }
+
+void pointAddRef(const Point *a, const Point *b, Point *r) {
+    r->x = a->x + b->x;
+    r->y = a->y + b->y;
+}
+
+Point pointAdd(const Point a, const Point b) {
+    return Point{a.x + b.x, a.y + b.y};
+}

@@ -14,8 +14,8 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
         return LOADER.find(name).orElseThrow(() -> new UnsatisfiedLinkError("unable to find symbol " + name));
     }
 
-    private static void upcall(MemorySegment address) {
-        var message = address.getUtf8String(0);
+    private static void upcall(MemorySegment segment) {
+        var message = segment.getString(0);
         System.out.println("Upcall: " + message);
     }
 
@@ -24,6 +24,8 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
     private final MethodHandle printHelloNative;
     private final MethodHandle passHelloNative;
     private final MethodHandle vec4addNative;
+    private final MethodHandle pointAddRefNative;
+    private final MethodHandle pointAddNative;
 
     private final MemorySegment upcallStub;
 
@@ -33,13 +35,24 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
         var dir = System.getProperty("user.dir");
         System.load(dir + "/build-native/Debug/ffm.dll");
         this.printHelloNative = LINKER.downcallHandle(loadSymbol("printHello"), FunctionDescriptor.ofVoid());
-        this.passHelloNative = LINKER.downcallHandle(loadSymbol("passHello"), FunctionDescriptor.ofVoid(ValueLayout.ADDRESS));
-        this.vec4addNative = LINKER.downcallHandle(loadSymbol("vec4add"), FunctionDescriptor.ofVoid(ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS));
+        this.passHelloNative = LINKER.downcallHandle(loadSymbol("passHello"), FunctionDescriptor.ofVoid(
+                ValueLayout.ADDRESS));
+        this.vec4addNative = LINKER.downcallHandle(loadSymbol("vec4add"), FunctionDescriptor.ofVoid(
+                ValueLayout.ADDRESS,
+                ValueLayout.ADDRESS,
+                ValueLayout.ADDRESS));
+        this.pointAddRefNative = LINKER.downcallHandle(loadSymbol("pointAddRef"), FunctionDescriptor.ofVoid(
+                ValueLayout.ADDRESS,
+                ValueLayout.ADDRESS,
+                ValueLayout.ADDRESS));
+        this.pointAddNative = LINKER.downcallHandle(loadSymbol("pointAdd"), FunctionDescriptor.of(PointNative.LAYOUT,
+                PointNative.LAYOUT,
+                PointNative.LAYOUT));
 
         try {
-            var upcallDescriptor = FunctionDescriptor.ofVoid(ValueLayout.ADDRESS.asUnbounded());
+            var upcallDescriptor = FunctionDescriptor.ofVoid(ValueLayout.ADDRESS.withTargetLayout(MemoryLayout.sequenceLayout(256, ValueLayout.JAVA_CHAR)));
             var methodHandle = MethodHandles.lookup().findStatic(NativeMethodHandlerImpl.class, "upcall", upcallDescriptor.toMethodType());
-            this.upcallStub = LINKER.upcallStub(methodHandle, upcallDescriptor, session.scope());
+            this.upcallStub = LINKER.upcallStub(methodHandle, upcallDescriptor, session);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -57,6 +70,17 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
 
     @Override
     public void vec4add(Vector4 a, Vector4 b, Vector4 r) throws Throwable {
-        vec4addNative.invoke(a.getAddress(), b.getAddress(), r.getAddress());
+        vec4addNative.invoke(a.getSegment(), b.getSegment(), r.getSegment());
+    }
+
+    @Override
+    public void pointAddRef(PointNative a, PointNative b, PointNative r) throws Throwable {
+        pointAddRefNative.invoke(a.getSegment(), b.getSegment(), r.getSegment());
+    }
+
+    @Override
+    public PointNative pointAdd(PointNative a, PointNative b) throws Throwable {
+        var rSegment = (MemorySegment) pointAddNative.invoke(session, a.getSegment(), b.getSegment());
+        return new PointNative(rSegment);
     }
 }

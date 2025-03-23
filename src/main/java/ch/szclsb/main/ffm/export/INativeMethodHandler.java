@@ -8,6 +8,8 @@ public interface INativeMethodHandler {
 
     void passHello() throws Throwable;
 
+    float addFloat(final float a, final float b) throws Throwable;
+
     void vec4add(final Vector4 a, final Vector4 b, Vector4 r) throws Throwable;
 
     void pointAddRef(final PointNative a, final PointNative b, PointNative r) throws Throwable;

@@ -11,6 +11,9 @@ public class Main {
 
             nativeMethodHandler.passHello();
 
+            var x = nativeMethodHandler.addFloat(1.0f, 2.0f);
+            System.out.printf("r%f%n", x);
+
             var a = new Vector4(session);
             var b = new Vector4(session);
             var r = new Vector4(session);

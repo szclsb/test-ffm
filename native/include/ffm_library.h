@@ -21,6 +21,8 @@ extern "C" {
 
     void DLLDIR vec4add(const float *a, const float *b, float *r);
 
+    float DLLDIR addFloat(const float a, const float b);
+
     void DLLDIR pointAddRef(const Point *a, const Point *b, Point *r);
 
     Point DLLDIR pointAdd(const Point a, const Point b);

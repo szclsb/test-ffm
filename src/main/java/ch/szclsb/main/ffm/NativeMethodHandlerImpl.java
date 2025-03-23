@@ -23,6 +23,7 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
 
     private final MethodHandle printHelloNative;
     private final MethodHandle passHelloNative;
+    private final MethodHandle addFloatNative;
     private final MethodHandle vec4addNative;
     private final MethodHandle pointAddRefNative;
     private final MethodHandle pointAddNative;
@@ -37,6 +38,9 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
         this.printHelloNative = LINKER.downcallHandle(loadSymbol("printHello"), FunctionDescriptor.ofVoid());
         this.passHelloNative = LINKER.downcallHandle(loadSymbol("passHello"), FunctionDescriptor.ofVoid(
                 ValueLayout.ADDRESS));
+        this.addFloatNative = LINKER.downcallHandle(loadSymbol("addFloat"), FunctionDescriptor.of(ValueLayout.JAVA_FLOAT,
+                ValueLayout.JAVA_FLOAT,
+                ValueLayout.JAVA_FLOAT));
         this.vec4addNative = LINKER.downcallHandle(loadSymbol("vec4add"), FunctionDescriptor.ofVoid(
                 ValueLayout.ADDRESS,
                 ValueLayout.ADDRESS,
@@ -69,6 +73,12 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
     }
 
     @Override
+    public float addFloat(float a, float b) throws Throwable {
+        var r = (float) addFloatNative.invoke(a, b);
+        return r;
+    }
+
+    @Override
     public void vec4add(Vector4 a, Vector4 b, Vector4 r) throws Throwable {
         vec4addNative.invoke(a.getSegment(), b.getSegment(), r.getSegment());
     }
@@ -80,6 +90,7 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
 
     @Override
     public PointNative pointAdd(PointNative a, PointNative b) throws Throwable {
+        // note session is required as first arg
         var rSegment = (MemorySegment) pointAddNative.invoke(session, a.getSegment(), b.getSegment());
         return new PointNative(rSegment);
     }

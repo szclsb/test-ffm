@@ -4,11 +4,26 @@
 using namespace std;
 
 void printHello() {
-    cout << "hello from dll" << endl;
+    cout << "hello1 from dll" << endl;
 }
 
 void passHello(void(*callback)(const char*)) {
-    callback("hello from dll");
+    callback("hello2 from dll");
+}
+
+const char* getHello() {
+    const char* x = "hello3 from dll";
+    return x;
+}
+
+void* allocateForeignInt(int value) {
+    int* p = (int*) malloc(4);
+    *p = value;
+    return p;
+}
+
+void freeForeign(void* p) {
+    free(p);
 }
 
 float addFloat(const float a, const float b) {

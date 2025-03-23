@@ -23,6 +23,9 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
 
     private final MethodHandle printHelloNative;
     private final MethodHandle passHelloNative;
+    private final MethodHandle getHelloNative;
+    private final MethodHandle allocateForeignIntNative;
+    private final MethodHandle freeForeignNative;
     private final MethodHandle addFloatNative;
     private final MethodHandle vec4addNative;
     private final MethodHandle pointAddRefNative;
@@ -38,6 +41,9 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
         this.printHelloNative = LINKER.downcallHandle(loadSymbol("printHello"), FunctionDescriptor.ofVoid());
         this.passHelloNative = LINKER.downcallHandle(loadSymbol("passHello"), FunctionDescriptor.ofVoid(
                 ValueLayout.ADDRESS));
+        this.getHelloNative = LINKER.downcallHandle(loadSymbol("getHello"), FunctionDescriptor.of(ValueLayout.ADDRESS.withTargetLayout(MemoryLayout.sequenceLayout(16, ValueLayout.JAVA_CHAR))));
+        this.allocateForeignIntNative = LINKER.downcallHandle(loadSymbol("allocateForeignInt"), FunctionDescriptor.of(ValueLayout.ADDRESS, ValueLayout.JAVA_INT));
+        this.freeForeignNative = LINKER.downcallHandle(loadSymbol("freeForeign"), FunctionDescriptor.ofVoid(ValueLayout.ADDRESS));
         this.addFloatNative = LINKER.downcallHandle(loadSymbol("addFloat"), FunctionDescriptor.of(ValueLayout.JAVA_FLOAT,
                 ValueLayout.JAVA_FLOAT,
                 ValueLayout.JAVA_FLOAT));
@@ -70,6 +76,23 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
     @Override
     public void passHello() throws Throwable {
         passHelloNative.invoke(upcallStub);
+    }
+
+    @Override
+    public String getHello() throws Throwable {
+        var rSegment = (MemorySegment) getHelloNative.invoke();
+        return rSegment.getString(0);
+    }
+
+    @Override
+    public MemorySegment allocateForeignInt(int value) throws Throwable {
+        var rSegment = (MemorySegment) allocateForeignIntNative.invoke(value);
+        return rSegment;
+    }
+
+    @Override
+    public void freeForeign(MemorySegment pointer) throws Throwable {
+        freeForeignNative.invoke(pointer);
     }
 
     @Override

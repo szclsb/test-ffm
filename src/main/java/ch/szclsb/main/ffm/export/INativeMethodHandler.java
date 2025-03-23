@@ -3,10 +3,18 @@ package ch.szclsb.main.ffm.export;
 import ch.szclsb.main.ffm.PointNative;
 import ch.szclsb.main.ffm.Vector4;
 
+import java.lang.foreign.MemorySegment;
+
 public interface INativeMethodHandler {
     void printHello() throws Throwable;
 
     void passHello() throws Throwable;
+
+    String getHello() throws Throwable;
+
+    MemorySegment allocateForeignInt(int value) throws Throwable;
+
+    void freeForeign(MemorySegment pointer) throws Throwable;
 
     float addFloat(final float a, final float b) throws Throwable;
 

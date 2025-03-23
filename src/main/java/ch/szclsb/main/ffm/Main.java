@@ -1,6 +1,8 @@
 package ch.szclsb.main.ffm;
 
 import java.lang.foreign.Arena;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.ValueLayout;
 
 public class Main {
     public static void main(String[] args) throws Throwable {
@@ -10,6 +12,12 @@ public class Main {
             nativeMethodHandler.printHello();
 
             nativeMethodHandler.passHello();
+
+            System.out.printf("%s%n", nativeMethodHandler.getHello());
+
+            var voidSegment = nativeMethodHandler.allocateForeignInt(10);
+            System.out.printf("%d%n", voidSegment.reinterpret(4).get(ValueLayout.JAVA_INT, 0));
+            nativeMethodHandler.freeForeign(voidSegment);
 
             var x = nativeMethodHandler.addFloat(1.0f, 2.0f);
             System.out.printf("r%f%n", x);

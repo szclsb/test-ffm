@@ -3,27 +3,27 @@
 #include <string>
 #include <functional>
 
-#ifdef DLLDIR_EX
-    #define DLLDIR  __declspec(dllexport)   // export DLL information
-#else
-    #define DLLDIR  __declspec(dllimport)   // import DLL information
-#endif
-
 extern "C" {
     typedef struct Point {
         int x;
         int y;
     } Point;
 
-    void DLLDIR printHello();
+    __declspec(dllexport) void printHello();
 
-    void DLLDIR passHello(void(*callback)(const char*));
+    __declspec(dllexport) void passHello(void(*callback)(const char*));
 
-    void DLLDIR vec4add(const float *a, const float *b, float *r);
+    __declspec(dllexport) const char* getHello();
 
-    float DLLDIR addFloat(const float a, const float b);
+    __declspec(dllexport) void* allocateForeignInt(int value);
 
-    void DLLDIR pointAddRef(const Point *a, const Point *b, Point *r);
+    __declspec(dllexport) void freeForeign(void* p);
 
-    Point DLLDIR pointAdd(const Point a, const Point b);
+    __declspec(dllexport) void vec4add(const float *a, const float *b, float *r);
+
+    __declspec(dllexport) float addFloat(const float a, const float b);
+
+    __declspec(dllexport) void pointAddRef(const Point *a, const Point *b, Point *r);
+
+    __declspec(dllexport) Point pointAdd(const Point a, const Point b);
 }

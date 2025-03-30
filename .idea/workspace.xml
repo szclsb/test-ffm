@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aca7e4cd-db20-47a4-b9cd-6e61d5520f00" name="Changes" comment="updated">
+    <list default="true" id="aca7e4cd-db20-47a4-b9cd-6e61d5520f00" name="Changes" comment="updated return pointer">
+      <change afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/Instance.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/native/cpp/ffm_library.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/native/cpp/ffm_library.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/native/include/ffm_library.h" beforeDir="false" afterPath="$PROJECT_DIR$/native/include/ffm_library.h" afterDir="false" />
@@ -68,9 +69,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="2DMEvyVpjpxBIFbEiyIXE4T1hZE" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -79,11 +80,13 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Gradle.Upgrade Gradle wrapper.executor": "Run",
-    "Gradle.test-ffm [:ch.szclsb.main.ffm.Main.main()].executor": "Debug",
+    "Gradle.test-ffm [:ch.szclsb.main.ffm.Main.main()].executor": "Run",
+    "Gradle.test-ffm [build].executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "WebServerToolWindowFactoryState": "false",
+    "ignore.preview.features.used": "true",
     "jdk.selected.JAVA_MODULE": "19",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Projects/test-ffm",
@@ -111,7 +114,7 @@
       <recent name="D:\Projects\test-ffm\native\include" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="Gradle.test-ffm [build]">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="ch.szclsb.main.ffm.Main" />
       <module name="ffm.main" />
@@ -251,7 +254,10 @@
       <workItem from="1689869144431" duration="2354000" />
       <workItem from="1689927863505" duration="1469000" />
       <workItem from="1689929343487" duration="1820000" />
-      <workItem from="1742731405428" duration="12512000" />
+      <workItem from="1742731405428" duration="12610000" />
+      <workItem from="1742755769905" duration="235000" />
+      <workItem from="1742842382447" duration="736000" />
+      <workItem from="1743328522863" duration="2810000" />
     </task>
     <task id="LOCAL-00001" summary="removed gradle support, since gradle 7.5.1 does not support java 19">
       <created>1660984159964</created>
@@ -305,7 +311,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742736186376</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="updated return pointer">
+      <option name="closed" value="true" />
+      <created>1742745635468</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1742745635468</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -329,7 +343,8 @@
     <MESSAGE value="impl module name to avoid native access warning" />
     <MESSAGE value="impl native upcall" />
     <MESSAGE value="updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated" />
+    <MESSAGE value="updated return pointer" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated return pointer" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

@@ -9,6 +9,8 @@ extern "C" {
         int y;
     } Point;
 
+    typedef struct Instance_T* Instance;
+
     __declspec(dllexport) void printHello();
 
     __declspec(dllexport) void passHello(void(*callback)(const char*));
@@ -26,4 +28,10 @@ extern "C" {
     __declspec(dllexport) void pointAddRef(const Point *a, const Point *b, Point *r);
 
     __declspec(dllexport) Point pointAdd(const Point a, const Point b);
+
+    __declspec(dllexport) void createInstance(int a, int b, Instance* pInstance);
+
+    __declspec(dllexport) void useInstance(Instance instance);
+
+    __declspec(dllexport) void destroyInstance(Instance instance);
 }

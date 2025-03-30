@@ -30,6 +30,9 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
     private final MethodHandle vec4addNative;
     private final MethodHandle pointAddRefNative;
     private final MethodHandle pointAddNative;
+    private final MethodHandle createInstanceNative;
+    private final MethodHandle useInstanceNative;
+    private final MethodHandle destroyInstanceNative;
 
     private final MemorySegment upcallStub;
 
@@ -58,6 +61,15 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
         this.pointAddNative = LINKER.downcallHandle(loadSymbol("pointAdd"), FunctionDescriptor.of(PointNative.LAYOUT,
                 PointNative.LAYOUT,
                 PointNative.LAYOUT));
+        this.createInstanceNative = LINKER.downcallHandle(loadSymbol("createInstance"), FunctionDescriptor.ofVoid(
+                ValueLayout.JAVA_INT,
+                ValueLayout.JAVA_INT,
+                ValueLayout.ADDRESS));
+        this.useInstanceNative = LINKER.downcallHandle(loadSymbol("useInstance"), FunctionDescriptor.ofVoid(
+                Instance.LAYOUT));
+        this.destroyInstanceNative = LINKER.downcallHandle(loadSymbol("destroyInstance"), FunctionDescriptor.ofVoid(
+                Instance.LAYOUT));
+
 
         try {
             var upcallDescriptor = FunctionDescriptor.ofVoid(ValueLayout.ADDRESS.withTargetLayout(MemoryLayout.sequenceLayout(256, ValueLayout.JAVA_CHAR)));
@@ -116,5 +128,22 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
         // note session is required as first arg
         var rSegment = (MemorySegment) pointAddNative.invoke(session, a.getSegment(), b.getSegment());
         return new PointNative(rSegment);
+    }
+
+    @Override
+    public Instance createInstance(int a, int b) throws Throwable {
+        var pSegment = session.allocate(ValueLayout.ADDRESS);
+        createInstanceNative.invoke(a, b, pSegment);
+        return new Instance(pSegment.get(ValueLayout.ADDRESS, 0));
+    }
+
+    @Override
+    public void useInstance(Instance instance) throws Throwable {
+        useInstanceNative.invoke(instance.getSegment());
+    }
+
+    @Override
+    public void destroyInstance(Instance instance) throws Throwable {
+        destroyInstanceNative.invoke(instance.getSegment());
     }
 }

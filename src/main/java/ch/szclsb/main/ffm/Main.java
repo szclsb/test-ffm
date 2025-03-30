@@ -52,6 +52,10 @@ public class Main {
             p2b.setY(2);
             var p3b = nativeMethodHandler.pointAdd(p1b, p2b);
             System.out.printf("r{%d, %d}%n", p3b.getX(), p3b.getY());
+
+            var instance = nativeMethodHandler.createInstance(12, -15);
+            nativeMethodHandler.useInstance(instance);
+            nativeMethodHandler.destroyInstance(instance);
         }
     }
 }

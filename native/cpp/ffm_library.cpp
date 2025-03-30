@@ -45,3 +45,21 @@ void pointAddRef(const Point *a, const Point *b, Point *r) {
 Point pointAdd(const Point a, const Point b) {
     return Point{a.x + b.x, a.y + b.y};
 }
+
+void createInstance(int a, int b, Instance* pInstance) {
+    Instance instance = (Instance) malloc(8);
+    *((int*)instance + 0) = a;
+    *((int*)instance + 4) = b;
+    *pInstance = instance;
+}
+
+void useInstance(Instance instance) {
+    int a = *((int*)instance + 0);
+    int b = *((int*)instance + 4);
+    const int value = a + b;
+    cout << "instance value: " << value << endl;
+}
+
+void destroyInstance(Instance instance) {
+    free(instance);
+}

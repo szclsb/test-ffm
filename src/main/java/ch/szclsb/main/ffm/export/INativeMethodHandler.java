@@ -1,5 +1,6 @@
 package ch.szclsb.main.ffm.export;
 
+import ch.szclsb.main.ffm.Instance;
 import ch.szclsb.main.ffm.PointNative;
 import ch.szclsb.main.ffm.Vector4;
 
@@ -23,4 +24,10 @@ public interface INativeMethodHandler {
     void pointAddRef(final PointNative a, final PointNative b, PointNative r) throws Throwable;
 
     PointNative pointAdd(final PointNative a, final PointNative b) throws Throwable;
+
+    Instance createInstance(final int a, final int b) throws Throwable;
+
+    void useInstance(Instance instance) throws Throwable;
+
+    void destroyInstance(Instance instance) throws Throwable;
 }

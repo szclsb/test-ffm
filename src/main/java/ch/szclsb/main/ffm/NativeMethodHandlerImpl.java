@@ -33,6 +33,9 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
     private final MethodHandle createInstanceNative;
     private final MethodHandle useInstanceNative;
     private final MethodHandle destroyInstanceNative;
+    private final MethodHandle increment_int_native;
+    private final MethodHandle increment_p_int_native;
+    private final MethodHandle increment_pp_int_native;
 
     private final MemorySegment upcallStub;
 
@@ -69,7 +72,15 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
                 Instance.LAYOUT));
         this.destroyInstanceNative = LINKER.downcallHandle(loadSymbol("destroyInstance"), FunctionDescriptor.ofVoid(
                 Instance.LAYOUT));
-
+        this.increment_int_native = LINKER.downcallHandle(loadSymbol("increment_int"), FunctionDescriptor.of(ValueLayout.JAVA_INT,
+                ValueLayout.JAVA_INT
+        ));
+        this.increment_p_int_native = LINKER.downcallHandle(loadSymbol("increment_p_int"), FunctionDescriptor.ofVoid(
+                ValueLayout.ADDRESS
+        ));
+        this.increment_pp_int_native = LINKER.downcallHandle(loadSymbol("increment_pp_int"), FunctionDescriptor.ofVoid(
+                ValueLayout.ADDRESS
+        ));
 
         try {
             var upcallDescriptor = FunctionDescriptor.ofVoid(ValueLayout.ADDRESS.withTargetLayout(MemoryLayout.sequenceLayout(256, ValueLayout.JAVA_CHAR)));
@@ -145,5 +156,28 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
     @Override
     public void destroyInstance(Instance instance) throws Throwable {
         destroyInstanceNative.invoke(instance.getSegment());
+    }
+
+    @Override
+    public int incrementInt(int value) throws Throwable {
+        return (int) increment_int_native.invoke(value);
+    }
+
+    @Override
+    public int incrementPInt(int value) throws Throwable {
+        var segment = session.allocate(ValueLayout.JAVA_INT, 1);
+        segment.set(ValueLayout.JAVA_INT, 0, value);
+        increment_p_int_native.invoke(segment);
+        return segment.get(ValueLayout.JAVA_INT, 0);
+    }
+
+    @Override
+    public int incrementPpInt(int value) throws Throwable {
+        var segment = session.allocate(ValueLayout.JAVA_INT, 1);
+        segment.set(ValueLayout.JAVA_INT, 0, value);
+        var segment2 = session.allocate(ValueLayout.ADDRESS, 1);
+        segment2.set(ValueLayout.ADDRESS, 0, segment);
+        increment_pp_int_native.invoke(segment2);
+        return segment.get(ValueLayout.JAVA_INT, 0);
     }
 }

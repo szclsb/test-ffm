@@ -56,6 +56,15 @@ public class Main {
             var instance = nativeMethodHandler.createInstance(12, -15);
             nativeMethodHandler.useInstance(instance);
             nativeMethodHandler.destroyInstance(instance);
+
+            var inc1 = nativeMethodHandler.incrementInt(32);
+            System.out.printf("inc1 of 32 is %d%n", inc1);
+
+            var inc2 = nativeMethodHandler.incrementPInt(32);
+            System.out.printf("inc2 of 32 is %d%n", inc2);
+
+            var inc3 = nativeMethodHandler.incrementPpInt(32);
+            System.out.printf("inc2 of 32 is %d%n", inc3);
         }
     }
 }

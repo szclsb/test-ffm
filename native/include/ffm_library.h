@@ -34,4 +34,10 @@ extern "C" {
     __declspec(dllexport) void useInstance(Instance instance);
 
     __declspec(dllexport) void destroyInstance(Instance instance);
+
+    __declspec(dllexport) int increment_int(int value);
+
+    __declspec(dllexport) void increment_p_int(int* pValue);
+
+    __declspec(dllexport) void increment_pp_int(int** ppValue);
 }

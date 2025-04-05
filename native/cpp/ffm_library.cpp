@@ -63,3 +63,15 @@ void useInstance(Instance instance) {
 void destroyInstance(Instance instance) {
     free(instance);
 }
+
+int increment_int(int value) {
+    return value + 1;
+}
+
+void increment_p_int(int* pValue) {
+    (*pValue)++;
+}
+
+void increment_pp_int(int** ppValue) {
+    increment_p_int(*ppValue);
+}

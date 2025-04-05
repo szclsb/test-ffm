@@ -30,4 +30,10 @@ public interface INativeMethodHandler {
     void useInstance(Instance instance) throws Throwable;
 
     void destroyInstance(Instance instance) throws Throwable;
+
+    int incrementInt(int value) throws Throwable;
+
+    int incrementPInt(int value) throws Throwable;
+
+    int incrementPpInt(int value) throws Throwable;
 }

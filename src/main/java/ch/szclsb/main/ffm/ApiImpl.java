@@ -1,12 +1,14 @@
 package ch.szclsb.main.ffm;
 
-import ch.szclsb.main.ffm.export.INativeMethodHandler;
+import ch.szclsb.main.ffm.export.Api;
+import ch.szclsb.main.ffm.export.NativeInt;
+import ch.szclsb.main.ffm.export.NativePointer;
 
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 
-public class NativeMethodHandlerImpl implements INativeMethodHandler {
+public class ApiImpl implements Api {
     private static final Linker LINKER = Linker.nativeLinker();
     private static final SymbolLookup LOADER = SymbolLookup.loaderLookup();
 
@@ -39,7 +41,7 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
 
     private final MemorySegment upcallStub;
 
-    public NativeMethodHandlerImpl(Arena session) {
+    public ApiImpl(Arena session) {
         this.session = session;
 
         var dir = System.getProperty("user.dir");
@@ -84,7 +86,7 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
 
         try {
             var upcallDescriptor = FunctionDescriptor.ofVoid(ValueLayout.ADDRESS.withTargetLayout(MemoryLayout.sequenceLayout(256, ValueLayout.JAVA_CHAR)));
-            var methodHandle = MethodHandles.lookup().findStatic(NativeMethodHandlerImpl.class, "upcall", upcallDescriptor.toMethodType());
+            var methodHandle = MethodHandles.lookup().findStatic(ApiImpl.class, "upcall", upcallDescriptor.toMethodType());
             this.upcallStub = LINKER.upcallStub(methodHandle, upcallDescriptor, session);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -164,20 +166,12 @@ public class NativeMethodHandlerImpl implements INativeMethodHandler {
     }
 
     @Override
-    public int incrementPInt(int value) throws Throwable {
-        var segment = session.allocate(ValueLayout.JAVA_INT, 1);
-        segment.set(ValueLayout.JAVA_INT, 0, value);
-        increment_p_int_native.invoke(segment);
-        return segment.get(ValueLayout.JAVA_INT, 0);
+    public void incrementPInt(NativePointer<NativeInt> pValue) throws Throwable {
+        increment_p_int_native.invoke(pValue.getSegment());
     }
 
     @Override
-    public int incrementPpInt(int value) throws Throwable {
-        var segment = session.allocate(ValueLayout.JAVA_INT, 1);
-        segment.set(ValueLayout.JAVA_INT, 0, value);
-        var segment2 = session.allocate(ValueLayout.ADDRESS, 1);
-        segment2.set(ValueLayout.ADDRESS, 0, segment);
-        increment_pp_int_native.invoke(segment2);
-        return segment.get(ValueLayout.JAVA_INT, 0);
+    public void incrementPpInt(NativePointer<NativePointer<NativeInt>> ppValue) throws Throwable {
+        increment_pp_int_native.invoke(ppValue.getSegment());
     }
 }

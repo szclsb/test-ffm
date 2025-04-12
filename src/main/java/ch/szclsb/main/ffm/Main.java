@@ -1,14 +1,17 @@
 package ch.szclsb.main.ffm;
 
+import ch.szclsb.main.ffm.export.Api;
+import ch.szclsb.main.ffm.export.NativeInt;
+import ch.szclsb.main.ffm.export.NativePointer;
+
 import java.lang.foreign.Arena;
-import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 
 public class Main {
     public static void main(String[] args) throws Throwable {
 
         try(var session = Arena.ofShared()) {
-            var nativeMethodHandler = new NativeMethodHandlerImpl(session);
+            Api nativeMethodHandler = new ApiImpl(session);
             nativeMethodHandler.printHello();
 
             nativeMethodHandler.passHello();
@@ -60,11 +63,13 @@ public class Main {
             var inc1 = nativeMethodHandler.incrementInt(32);
             System.out.printf("inc1 of 32 is %d%n", inc1);
 
-            var inc2 = nativeMethodHandler.incrementPInt(32);
-            System.out.printf("inc2 of 32 is %d%n", inc2);
+            NativePointer<NativeInt> inc2 = new NativeIntPointerImpl(session, 32);
+            nativeMethodHandler.incrementPInt(inc2);
+            System.out.printf("inc2 of 32 is %d%n", inc2.getReference().getValue());
 
-            var inc3 = nativeMethodHandler.incrementPpInt(32);
-            System.out.printf("inc2 of 32 is %d%n", inc3);
+            NativePointer<NativePointer<NativeInt>> inc3 = new SegmentPointer<>(session, new NativeIntPointerImpl(session, 32));
+            nativeMethodHandler.incrementPpInt(inc3);
+            System.out.printf("inc3 of 32 is %d%n", inc3.getReference().getReference().getValue());
         }
     }
 }

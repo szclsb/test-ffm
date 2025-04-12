@@ -1,12 +1,10 @@
 package ch.szclsb.main.ffm.export;
 
-import ch.szclsb.main.ffm.Instance;
-import ch.szclsb.main.ffm.PointNative;
-import ch.szclsb.main.ffm.Vector4;
+import ch.szclsb.main.ffm.*;
 
 import java.lang.foreign.MemorySegment;
 
-public interface INativeMethodHandler {
+public interface Api {
     void printHello() throws Throwable;
 
     void passHello() throws Throwable;
@@ -33,7 +31,7 @@ public interface INativeMethodHandler {
 
     int incrementInt(int value) throws Throwable;
 
-    int incrementPInt(int value) throws Throwable;
+    void incrementPInt(NativePointer<NativeInt> pValue) throws Throwable;
 
-    int incrementPpInt(int value) throws Throwable;
+    void incrementPpInt(NativePointer<NativePointer<NativeInt>> ppValue) throws Throwable;
 }

@@ -1,5 +1,8 @@
 package ch.szclsb.main.ffm;
 
+import ch.szclsb.main.ffm.export.NativePointer;
+import ch.szclsb.main.ffm.export.structs.PointNative;
+
 import java.lang.foreign.MemoryLayout;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.SegmentAllocator;
@@ -7,7 +10,7 @@ import java.lang.foreign.StructLayout;
 
 import static java.lang.foreign.ValueLayout.JAVA_INT;
 
-public class PointNative {
+public class NativePointImpl implements PointNative, NativePointer<PointNative> {
     public static final StructLayout LAYOUT = MemoryLayout.structLayout(
             JAVA_INT.withName("x"),
             JAVA_INT.withName("y")
@@ -15,16 +18,21 @@ public class PointNative {
 
     private final MemorySegment segment;
 
-    public PointNative(SegmentAllocator allocator) {
+    public NativePointImpl(SegmentAllocator allocator) {
         this.segment = allocator.allocate(LAYOUT);
     }
 
-    public PointNative(MemorySegment segment) {
+    public NativePointImpl(MemorySegment segment) {
         this.segment = segment;
     }
 
     public MemorySegment getSegment() {
         return segment.asReadOnly();
+    }
+
+    @Override
+    public PointNative getReference() {
+        return this;
     }
 
     public int getX() {

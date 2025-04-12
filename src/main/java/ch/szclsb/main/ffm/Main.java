@@ -1,7 +1,8 @@
 package ch.szclsb.main.ffm;
 
 import ch.szclsb.main.ffm.export.Api;
-import ch.szclsb.main.ffm.export.NativeInt;
+import ch.szclsb.main.ffm.export.structs.PointNative;
+import ch.szclsb.main.ffm.export.values.IntNative;
 import ch.szclsb.main.ffm.export.NativePointer;
 
 import java.lang.foreign.Arena;
@@ -37,23 +38,23 @@ public class Main {
 
             System.out.printf("r[%.2f, %.2f, %.2f, %.2f]%n", result[0], result[1], result[2], result[3]);
 
-            var p1a = new PointNative(session);
-            p1a.setX(1);
-            p1a.setY(2);
-            var p2a = new PointNative(session);
-            p2a.setX(3);
-            p2a.setY(4);
-            var p3a = new PointNative(session);
+            NativePointer<PointNative> p1a = new NativePointImpl(session);
+            p1a.getReference().setX(1);
+            p1a.getReference().setY(2);
+            NativePointer<PointNative> p2a = new NativePointImpl(session);
+            p2a.getReference().setX(3);
+            p2a.getReference().setY(4);
+            NativePointer<PointNative> p3a = new NativePointImpl(session);
             nativeMethodHandler.pointAddRef(p1a, p2a, p3a);
-            System.out.printf("r{%d, %d}%n", p3a.getX(), p3a.getY());
+            System.out.printf("r{%d, %d}%n", p3a.getReference().getX(), p3a.getReference().getY());
 
-            var p1b = new PointNative(session);
+            PointNative p1b = new NativePointImpl(session);
             p1b.setX(4);
             p1b.setY(3);
-            var p2b = new PointNative(session);
+            PointNative p2b = new NativePointImpl(session);
             p2b.setX(1);
             p2b.setY(2);
-            var p3b = nativeMethodHandler.pointAdd(p1b, p2b);
+            PointNative p3b = nativeMethodHandler.pointAdd(p1b, p2b);
             System.out.printf("r{%d, %d}%n", p3b.getX(), p3b.getY());
 
             var instance = nativeMethodHandler.createInstance(12, -15);
@@ -63,11 +64,11 @@ public class Main {
             var inc1 = nativeMethodHandler.incrementInt(32);
             System.out.printf("inc1 of 32 is %d%n", inc1);
 
-            NativePointer<NativeInt> inc2 = new NativeIntPointerImpl(session, 32);
+            NativePointer<IntNative> inc2 = new NativeIntPointerImpl(session, 32);
             nativeMethodHandler.incrementPInt(inc2);
             System.out.printf("inc2 of 32 is %d%n", inc2.getReference().getValue());
 
-            NativePointer<NativePointer<NativeInt>> inc3 = new SegmentPointer<>(session, new NativeIntPointerImpl(session, 32));
+            NativePointer<NativePointer<IntNative>> inc3 = new SegmentPointer<>(session, new NativeIntPointerImpl(session, 32));
             nativeMethodHandler.incrementPpInt(inc3);
             System.out.printf("inc3 of 32 is %d%n", inc3.getReference().getReference().getValue());
         }

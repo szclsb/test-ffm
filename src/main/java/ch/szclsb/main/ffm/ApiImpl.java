@@ -1,7 +1,8 @@
 package ch.szclsb.main.ffm;
 
 import ch.szclsb.main.ffm.export.Api;
-import ch.szclsb.main.ffm.export.NativeInt;
+import ch.szclsb.main.ffm.export.structs.PointNative;
+import ch.szclsb.main.ffm.export.values.IntNative;
 import ch.szclsb.main.ffm.export.NativePointer;
 
 import java.lang.foreign.*;
@@ -63,9 +64,9 @@ public class ApiImpl implements Api {
                 ValueLayout.ADDRESS,
                 ValueLayout.ADDRESS,
                 ValueLayout.ADDRESS));
-        this.pointAddNative = LINKER.downcallHandle(loadSymbol("pointAdd"), FunctionDescriptor.of(PointNative.LAYOUT,
-                PointNative.LAYOUT,
-                PointNative.LAYOUT));
+        this.pointAddNative = LINKER.downcallHandle(loadSymbol("pointAdd"), FunctionDescriptor.of(NativePointImpl.LAYOUT,
+                NativePointImpl.LAYOUT,
+                NativePointImpl.LAYOUT));
         this.createInstanceNative = LINKER.downcallHandle(loadSymbol("createInstance"), FunctionDescriptor.ofVoid(
                 ValueLayout.JAVA_INT,
                 ValueLayout.JAVA_INT,
@@ -132,7 +133,7 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public void pointAddRef(PointNative a, PointNative b, PointNative r) throws Throwable {
+    public void pointAddRef(NativePointer<PointNative> a, NativePointer<PointNative> b, NativePointer<PointNative> r) throws Throwable {
         pointAddRefNative.invoke(a.getSegment(), b.getSegment(), r.getSegment());
     }
 
@@ -140,7 +141,7 @@ public class ApiImpl implements Api {
     public PointNative pointAdd(PointNative a, PointNative b) throws Throwable {
         // note session is required as first arg
         var rSegment = (MemorySegment) pointAddNative.invoke(session, a.getSegment(), b.getSegment());
-        return new PointNative(rSegment);
+        return new NativePointImpl(rSegment);
     }
 
     @Override
@@ -166,12 +167,12 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public void incrementPInt(NativePointer<NativeInt> pValue) throws Throwable {
+    public void incrementPInt(NativePointer<IntNative> pValue) throws Throwable {
         increment_p_int_native.invoke(pValue.getSegment());
     }
 
     @Override
-    public void incrementPpInt(NativePointer<NativePointer<NativeInt>> ppValue) throws Throwable {
+    public void incrementPpInt(NativePointer<NativePointer<IntNative>> ppValue) throws Throwable {
         increment_pp_int_native.invoke(ppValue.getSegment());
     }
 }

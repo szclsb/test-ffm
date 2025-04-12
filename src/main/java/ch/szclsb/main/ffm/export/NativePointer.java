@@ -1,5 +1,5 @@
 package ch.szclsb.main.ffm.export;
 
-public interface NativePointer<T extends Native> extends Native {
+public interface NativePointer<T extends Native> extends HasSegment {
     T getReference();
 }

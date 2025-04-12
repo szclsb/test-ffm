@@ -1,6 +1,6 @@
 package ch.szclsb.main.ffm;
 
-import ch.szclsb.main.ffm.export.NativeInt;
+import ch.szclsb.main.ffm.export.values.IntNative;
 import ch.szclsb.main.ffm.export.NativePointer;
 
 import java.lang.foreign.MemorySegment;
@@ -11,9 +11,9 @@ import static java.lang.foreign.ValueLayout.JAVA_INT;
 /**
  * Handles int pointer
  */
-public class NativeIntPointerImpl implements NativePointer<NativeInt> {
+public class NativeIntPointerImpl implements NativePointer<IntNative> {
     private final MemorySegment segment;
-    private final NativeInt api = new NativeInt() {
+    private final IntNative api = new IntNative() {
         @Override
         public int getValue() {
             return segment.get(JAVA_INT, 0);
@@ -22,11 +22,6 @@ public class NativeIntPointerImpl implements NativePointer<NativeInt> {
         @Override
         public void setValue(int value) {
             segment.set(JAVA_INT, 0, value);
-        }
-
-        @Override
-        public MemorySegment getSegment() {
-            return segment;
         }
     };
 
@@ -44,12 +39,12 @@ public class NativeIntPointerImpl implements NativePointer<NativeInt> {
     }
 
     @Override
-    public NativeInt getReference() {
+    public IntNative getReference() {
         return api;
     }
 
     @Override
     public MemorySegment getSegment() {
-        return api.getSegment();
+        return segment;
     }
 }

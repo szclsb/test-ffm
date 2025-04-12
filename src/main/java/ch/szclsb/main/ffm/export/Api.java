@@ -1,6 +1,8 @@
 package ch.szclsb.main.ffm.export;
 
 import ch.szclsb.main.ffm.*;
+import ch.szclsb.main.ffm.export.structs.PointNative;
+import ch.szclsb.main.ffm.export.values.IntNative;
 
 import java.lang.foreign.MemorySegment;
 
@@ -19,7 +21,7 @@ public interface Api {
 
     void vec4add(final Vector4 a, final Vector4 b, Vector4 r) throws Throwable;
 
-    void pointAddRef(final PointNative a, final PointNative b, PointNative r) throws Throwable;
+    void pointAddRef(final NativePointer<PointNative> a, final NativePointer<PointNative> b, NativePointer<PointNative> r) throws Throwable;
 
     PointNative pointAdd(final PointNative a, final PointNative b) throws Throwable;
 
@@ -31,7 +33,7 @@ public interface Api {
 
     int incrementInt(int value) throws Throwable;
 
-    void incrementPInt(NativePointer<NativeInt> pValue) throws Throwable;
+    void incrementPInt(NativePointer<IntNative> pValue) throws Throwable;
 
-    void incrementPpInt(NativePointer<NativePointer<NativeInt>> ppValue) throws Throwable;
+    void incrementPpInt(NativePointer<NativePointer<IntNative>> ppValue) throws Throwable;
 }

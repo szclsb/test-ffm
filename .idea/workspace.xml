@@ -5,19 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aca7e4cd-db20-47a4-b9cd-6e61d5520f00" name="Changes" comment="added pointer interface">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/HasSegment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/structs/PointNative.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/values/LongNative.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/ApiImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/ApiImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/NativeIntPointerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/NativeIntPointerImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/PointNative.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/NativePointImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Api.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Api.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Native.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Native.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/NativeInt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/values/IntNative.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/NativePointer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/NativePointer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

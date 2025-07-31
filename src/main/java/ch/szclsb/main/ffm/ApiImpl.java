@@ -129,12 +129,12 @@ public class ApiImpl implements Api {
 
     @Override
     public void vec4add(Vector4 a, Vector4 b, Vector4 r) throws Throwable {
-        vec4addNative.invoke(a.getSegment(), b.getSegment(), r.getSegment());
+        vec4addNative.invoke(a.getSegment().reinterpret(0), b.getSegment().reinterpret(0), r.getSegment().reinterpret(0));
     }
 
     @Override
     public void pointAddRef(NativePointer<PointNative> a, NativePointer<PointNative> b, NativePointer<PointNative> r) throws Throwable {
-        pointAddRefNative.invoke(a.getSegment(), b.getSegment(), r.getSegment());
+        pointAddRefNative.invoke(a.getSegment().reinterpret(0), b.getSegment().reinterpret(0), r.getSegment().reinterpret(0));
     }
 
     @Override

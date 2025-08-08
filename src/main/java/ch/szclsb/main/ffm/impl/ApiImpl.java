@@ -1,9 +1,12 @@
-package ch.szclsb.main.ffm;
+package ch.szclsb.main.ffm.impl;
 
+import ch.szclsb.main.ffm.impl.structs.PointNativeImpl;
+import ch.szclsb.main.ffm.impl.pointer.VoidPointer;
 import ch.szclsb.main.ffm.export.Api;
+import ch.szclsb.main.ffm.export.Pointer;
+import ch.szclsb.main.ffm.export.Ref;
 import ch.szclsb.main.ffm.export.structs.PointNative;
 import ch.szclsb.main.ffm.export.values.IntNative;
-import ch.szclsb.main.ffm.export.NativePointer;
 
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
@@ -64,17 +67,17 @@ public class ApiImpl implements Api {
                 ValueLayout.ADDRESS,
                 ValueLayout.ADDRESS,
                 ValueLayout.ADDRESS));
-        this.pointAddNative = LINKER.downcallHandle(loadSymbol("pointAdd"), FunctionDescriptor.of(NativePointImpl.LAYOUT,
-                NativePointImpl.LAYOUT,
-                NativePointImpl.LAYOUT));
+        this.pointAddNative = LINKER.downcallHandle(loadSymbol("pointAdd"), FunctionDescriptor.of(PointNativeImpl.LAYOUT,
+                PointNativeImpl.LAYOUT,
+                PointNativeImpl.LAYOUT));
         this.createInstanceNative = LINKER.downcallHandle(loadSymbol("createInstance"), FunctionDescriptor.ofVoid(
                 ValueLayout.JAVA_INT,
                 ValueLayout.JAVA_INT,
                 ValueLayout.ADDRESS));
         this.useInstanceNative = LINKER.downcallHandle(loadSymbol("useInstance"), FunctionDescriptor.ofVoid(
-                Instance.LAYOUT));
+                ValueLayout.ADDRESS));
         this.destroyInstanceNative = LINKER.downcallHandle(loadSymbol("destroyInstance"), FunctionDescriptor.ofVoid(
-                Instance.LAYOUT));
+                ValueLayout.ADDRESS));
         this.increment_int_native = LINKER.downcallHandle(loadSymbol("increment_int"), FunctionDescriptor.of(ValueLayout.JAVA_INT,
                 ValueLayout.JAVA_INT
         ));
@@ -129,36 +132,36 @@ public class ApiImpl implements Api {
 
     @Override
     public void vec4add(Vector4 a, Vector4 b, Vector4 r) throws Throwable {
-        vec4addNative.invoke(a.getSegment().reinterpret(0), b.getSegment().reinterpret(0), r.getSegment().reinterpret(0));
+        vec4addNative.invoke(a.getSegment(), b.getSegment(), r.getSegment());
     }
 
     @Override
-    public void pointAddRef(NativePointer<PointNative> a, NativePointer<PointNative> b, NativePointer<PointNative> r) throws Throwable {
-        pointAddRefNative.invoke(a.getSegment().reinterpret(0), b.getSegment().reinterpret(0), r.getSegment().reinterpret(0));
+    public void pointAddRef(Ref<PointNative> a, Ref<PointNative> b, Ref<PointNative> r) throws Throwable {
+        pointAddRefNative.invoke(a.getAddress(), b.getAddress(), r.getAddress());
     }
 
     @Override
     public PointNative pointAdd(PointNative a, PointNative b) throws Throwable {
         // note session is required as first arg
         var rSegment = (MemorySegment) pointAddNative.invoke(session, a.getSegment(), b.getSegment());
-        return new NativePointImpl(rSegment);
+        return PointNativeImpl.ofSegment(rSegment);
     }
 
     @Override
-    public Instance createInstance(int a, int b) throws Throwable {
+    public Pointer createInstance(int a, int b) throws Throwable {
         var pSegment = session.allocate(ValueLayout.ADDRESS);
         createInstanceNative.invoke(a, b, pSegment);
-        return new Instance(pSegment.get(ValueLayout.ADDRESS, 0));
+        return new VoidPointer(pSegment.get(ValueLayout.ADDRESS, 0));
     }
 
     @Override
-    public void useInstance(Instance instance) throws Throwable {
-        useInstanceNative.invoke(instance.getSegment());
+    public void useInstance(Pointer instance) throws Throwable {
+        useInstanceNative.invoke(instance.getAddress());
     }
 
     @Override
-    public void destroyInstance(Instance instance) throws Throwable {
-        destroyInstanceNative.invoke(instance.getSegment());
+    public void destroyInstance(Pointer instance) throws Throwable {
+        destroyInstanceNative.invoke(instance.getAddress());
     }
 
     @Override
@@ -167,12 +170,12 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public void incrementPInt(NativePointer<IntNative> pValue) throws Throwable {
-        increment_p_int_native.invoke(pValue.getSegment());
+    public void incrementPInt(Ref<IntNative> pValue) throws Throwable {
+        increment_p_int_native.invoke(pValue.getAddress());
     }
 
     @Override
-    public void incrementPpInt(NativePointer<NativePointer<IntNative>> ppValue) throws Throwable {
-        increment_pp_int_native.invoke(ppValue.getSegment());
+    public void incrementPpInt(Ref<Ref<IntNative>> ppValue) throws Throwable {
+        increment_pp_int_native.invoke(ppValue.getAddress());
     }
 }

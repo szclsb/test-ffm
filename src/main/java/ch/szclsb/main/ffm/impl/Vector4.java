@@ -1,4 +1,4 @@
-package ch.szclsb.main.ffm;
+package ch.szclsb.main.ffm.impl;
 
 import java.lang.foreign.*;
 

@@ -11,11 +11,18 @@ import java.util.function.Function;
 public class AddressPointer<T extends Ref<?>> extends BaseSegment implements Ref<T> {
     public static final ValueLayout.OfLong LAYOUT = ValueLayout.JAVA_LONG;
     private final Function<Long, T> deref;
+//    private final Class<T> rClass;
 
-    private AddressPointer(Function<Long, T> deref, MemorySegment memorySegment) {
+    private AddressPointer(MemorySegment memorySegment, Class<T> rClass, Function<Long, T> deref) {
         super(memorySegment);
+//        this.rClass = rClass;
         this.deref = deref;
     }
+
+//    @Override
+//    public Class<T> getRefClass() {
+//        return rClass;
+//    }
 
     @Override
     public T dereference() {
@@ -27,9 +34,7 @@ public class AddressPointer<T extends Ref<?>> extends BaseSegment implements Ref
         this.segment.set(LAYOUT, 0, value.getAddress().address());
     }
 
-    public static <T extends Ref<?>> Ref<T> allocate(SegmentAllocator allocator, Function<Long, T> deref, T value) {
-        var ref = new AddressPointer<>(deref, allocator.allocate(LAYOUT));
-        ref.reference(value);
-        return ref;
+    public static <T extends Ref<?>> Ref<T> allocate(SegmentAllocator allocator, Function<Long, T> deref) {
+        return new AddressPointer<>(allocator.allocate(LAYOUT), null, deref);
     }
 }

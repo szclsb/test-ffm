@@ -6,7 +6,17 @@ import ch.szclsb.main.ffm.export.Ref;
 import java.lang.foreign.MemorySegment;
 
 public class SegmentPointer<T extends Segment> implements Ref<T> {
+//    private final Class<T> rClass;
     private T reference;
+
+    public SegmentPointer(Class<T> rClass) {
+//        this.rClass = rClass;
+    }
+
+//    @Override
+//    public Class<T> getRefClass() {
+//        return rClass;
+//    }
 
     @Override
     public T dereference() {
@@ -21,11 +31,5 @@ public class SegmentPointer<T extends Segment> implements Ref<T> {
     @Override
     public MemorySegment getAddress() {
         return reference == null ? MemorySegment.NULL : reference.getAddress();
-    }
-
-    public static <T extends Segment> Ref<T> of(T value) {
-        var ref = new SegmentPointer<T>();
-        ref.reference(value);
-        return ref;
     }
 }

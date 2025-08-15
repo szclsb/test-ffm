@@ -11,11 +11,6 @@ import java.lang.foreign.StructLayout;
 import static java.lang.foreign.ValueLayout.JAVA_INT;
 
 public class PointNativeImpl extends BaseSegment implements PointNative  {
-    public static final StructLayout LAYOUT = MemoryLayout.structLayout(
-            JAVA_INT.withName("x"),
-            JAVA_INT.withName("y")
-    ).withName("Point");
-
     private PointNativeImpl(MemorySegment memorySegment) {
         super(memorySegment);
     }

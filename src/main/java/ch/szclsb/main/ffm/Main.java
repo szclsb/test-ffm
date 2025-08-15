@@ -1,15 +1,10 @@
 package ch.szclsb.main.ffm;
 
 import ch.szclsb.main.ffm.export.Api;
-import ch.szclsb.main.ffm.export.Ref;
-import ch.szclsb.main.ffm.export.structs.PointNative;
-import ch.szclsb.main.ffm.export.values.IntNative;
+import ch.szclsb.main.ffm.export.SegmentFactory;
 import ch.szclsb.main.ffm.impl.ApiImpl;
+import ch.szclsb.main.ffm.impl.SegmentFactoryImpl;
 import ch.szclsb.main.ffm.impl.Vector4;
-import ch.szclsb.main.ffm.impl.pointer.AddressPointer;
-import ch.szclsb.main.ffm.impl.pointer.SegmentPointer;
-import ch.szclsb.main.ffm.impl.values.IntNativeImpl;
-import ch.szclsb.main.ffm.impl.structs.PointNativeImpl;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.ValueLayout;
@@ -19,6 +14,8 @@ public class Main {
 
         try(var session = Arena.ofShared()) {
             Api nativeMethodHandler = new ApiImpl(session);
+            SegmentFactory segmentFactory = new SegmentFactoryImpl(session);
+
             nativeMethodHandler.printHello();
 
             nativeMethodHandler.passHello();
@@ -44,23 +41,23 @@ public class Main {
 
             System.out.printf("r[%.2f, %.2f, %.2f, %.2f]%n", result[0], result[1], result[2], result[3]);
 
-            Ref<PointNative> p1a = SegmentPointer.of(PointNativeImpl.allocate(session));
+            var p1a = segmentFactory.createPointP(segmentFactory.allocatePoint());
             p1a.dereference().setX(1);
             p1a.dereference().setY(2);
-            Ref<PointNative> p2a = SegmentPointer.of(PointNativeImpl.allocate(session));
+            var p2a = segmentFactory.createPointP(segmentFactory.allocatePoint());;
             p2a.dereference().setX(3);
             p2a.dereference().setY(4);
-            Ref<PointNative> p3a = SegmentPointer.of(PointNativeImpl.allocate(session));
+            var p3a = segmentFactory.createPointP(segmentFactory.allocatePoint());;
             nativeMethodHandler.pointAddRef(p1a, p2a, p3a);
             System.out.printf("r{%d, %d}%n", p3a.dereference().getX(), p3a.dereference().getY());
 
-            PointNative p1b = PointNativeImpl.allocate(session);
+            var p1b = segmentFactory.allocatePoint();
             p1b.setX(4);
             p1b.setY(3);
-            PointNative p2b = PointNativeImpl.allocate(session);
+            var p2b = segmentFactory.allocatePoint();
             p2b.setX(1);
             p2b.setY(2);
-            PointNative p3b = nativeMethodHandler.pointAdd(p1b, p2b);
+            var p3b = nativeMethodHandler.pointAdd(p1b, p2b);
             System.out.printf("r{%d, %d}%n", p3b.getX(), p3b.getY());
 
             var instance = nativeMethodHandler.createInstance(12, -15);
@@ -70,13 +67,11 @@ public class Main {
             var inc1 = nativeMethodHandler.incrementInt(32);
             System.out.printf("inc1 of 32 is %d%n", inc1);
 
-            Ref<IntNative> inc2 = SegmentPointer.of(IntNativeImpl.allocate(session, 42));
+            var inc2 = segmentFactory.createIntP(segmentFactory.allocateInt(42));
             nativeMethodHandler.incrementPInt(inc2);
             System.out.printf("inc2 of 42 is %d%n", inc2.dereference().getValue());
 
-            Ref<Ref<IntNative>> inc3 = AddressPointer.allocate(session,
-                    address -> SegmentPointer.of(IntNativeImpl.ofAddress(address)),
-                    SegmentPointer.of(IntNativeImpl.allocate(session, 52)));
+            var inc3 = segmentFactory.createIntPP(segmentFactory.createIntP(segmentFactory.allocateInt(52)));
             //inc3.reference(inc2);
             nativeMethodHandler.incrementPpInt(inc3);
             System.out.printf("inc3 of 52 is %d%n", inc3.dereference().dereference().getValue());

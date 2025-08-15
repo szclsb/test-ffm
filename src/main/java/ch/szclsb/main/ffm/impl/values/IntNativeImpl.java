@@ -5,14 +5,11 @@ import ch.szclsb.main.ffm.impl.BaseSegment;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.SegmentAllocator;
-import java.lang.foreign.ValueLayout;
 
 /**
  * Handles int pointer
  */
 public class IntNativeImpl extends BaseSegment implements IntNative {
-    public static ValueLayout.OfInt LAYOUT = ValueLayout.JAVA_INT;
-
     private IntNativeImpl(MemorySegment memorySegment) {
         super(memorySegment);
     }

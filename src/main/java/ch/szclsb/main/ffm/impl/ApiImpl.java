@@ -1,11 +1,9 @@
 package ch.szclsb.main.ffm.impl;
 
-import ch.szclsb.main.ffm.impl.structs.PointNativeImpl;
-import ch.szclsb.main.ffm.impl.pointer.VoidPointer;
+import ch.szclsb.main.ffm.impl.structs.PointImpl;
 import ch.szclsb.main.ffm.export.Api;
-import ch.szclsb.main.ffm.export.Pointer;
-import ch.szclsb.main.ffm.export.Ref;
-import ch.szclsb.main.ffm.export.structs.PointNative;
+import ch.szclsb.main.ffm.export.Address;
+import ch.szclsb.main.ffm.export.structs.Point;
 import ch.szclsb.main.ffm.export.values.IntNative;
 
 import java.lang.foreign.*;
@@ -67,9 +65,9 @@ public class ApiImpl implements Api {
                 ValueLayout.ADDRESS,
                 ValueLayout.ADDRESS,
                 ValueLayout.ADDRESS));
-        this.pointAddNative = LINKER.downcallHandle(loadSymbol("pointAdd"), FunctionDescriptor.of(PointNativeImpl.LAYOUT,
-                PointNativeImpl.LAYOUT,
-                PointNativeImpl.LAYOUT));
+        this.pointAddNative = LINKER.downcallHandle(loadSymbol("pointAdd"), FunctionDescriptor.of(PointImpl.LAYOUT,
+                PointImpl.LAYOUT,
+                PointImpl.LAYOUT));
         this.createInstanceNative = LINKER.downcallHandle(loadSymbol("createInstance"), FunctionDescriptor.ofVoid(
                 ValueLayout.JAVA_INT,
                 ValueLayout.JAVA_INT,
@@ -136,15 +134,15 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public void pointAddRef(Ref<PointNative> a, Ref<PointNative> b, Ref<PointNative> r) throws Throwable {
+    public void pointAddRef(Address<Point> a, Address<Point> b, Address<Point> r) throws Throwable {
         pointAddRefNative.invoke(a.getAddress(), b.getAddress(), r.getAddress());
     }
 
     @Override
-    public PointNative pointAdd(PointNative a, PointNative b) throws Throwable {
+    public Point pointAdd(Point a, Point b) throws Throwable {
         // note session is required as first arg
         var rSegment = (MemorySegment) pointAddNative.invoke(session, a.getSegment(), b.getSegment());
-        return PointNativeImpl.ofSegment(rSegment);
+        return PointImpl.ofSegment(rSegment);
     }
 
     @Override
@@ -170,12 +168,12 @@ public class ApiImpl implements Api {
     }
 
     @Override
-    public void incrementPInt(Ref<IntNative> pValue) throws Throwable {
+    public void incrementPInt(Address<IntNative> pValue) throws Throwable {
         increment_p_int_native.invoke(pValue.getAddress());
     }
 
     @Override
-    public void incrementPpInt(Ref<Ref<IntNative>> ppValue) throws Throwable {
+    public void incrementPpInt(Address<Address<IntNative>> ppValue) throws Throwable {
         increment_pp_int_native.invoke(ppValue.getAddress());
     }
 }

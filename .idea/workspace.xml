@@ -5,10 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aca7e4cd-db20-47a4-b9cd-6e61d5520f00" name="Changes" comment="impl factory">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Address.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Native.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build-native.bat" beforeDir="false" afterPath="$PROJECT_DIR$/build-native.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Api.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Api.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Pointer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Ref.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Segment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/SegmentFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/structs/PointNative.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/structs/Point.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/structs/PointNativeFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/values/IntNative.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/values/IntNativeFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/ApiImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/ApiImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/BaseSegment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/BaseSegment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/SegmentFactoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/SegmentFactoryImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/pointer/AddressPointer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/pointer/AddressPointer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/pointer/SegmentPointer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/pointer/SegmentPointer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/pointer/VoidPointer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/structs/PointNativeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/structs/PointImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/values/IntNativeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/values/IntNativeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,13 +73,19 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="module-info" />
-        <option value="Class" />
         <option value="Record" />
+        <option value="AnnotationType" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -224,8 +248,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
-        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
       </set>
     </attachedChunks>
   </component>
@@ -263,6 +287,8 @@
       <workItem from="1754933918664" duration="1788000" />
       <workItem from="1755245686810" duration="9688000" />
       <workItem from="1758038689072" duration="641000" />
+      <workItem from="1758300380789" duration="4065000" />
+      <workItem from="1758363760450" duration="3115000" />
     </task>
     <task id="LOCAL-00001" summary="removed gradle support, since gradle 7.5.1 does not support java 19">
       <created>1660984159964</created>

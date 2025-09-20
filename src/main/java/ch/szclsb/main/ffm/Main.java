@@ -1,7 +1,6 @@
 package ch.szclsb.main.ffm;
 
 import ch.szclsb.main.ffm.export.Api;
-import ch.szclsb.main.ffm.export.SegmentFactory;
 import ch.szclsb.main.ffm.impl.ApiImpl;
 import ch.szclsb.main.ffm.impl.SegmentFactoryImpl;
 import ch.szclsb.main.ffm.impl.Vector4;

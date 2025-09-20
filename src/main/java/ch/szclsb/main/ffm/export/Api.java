@@ -1,6 +1,6 @@
 package ch.szclsb.main.ffm.export;
 
-import ch.szclsb.main.ffm.export.structs.PointNative;
+import ch.szclsb.main.ffm.export.structs.Point;
 import ch.szclsb.main.ffm.export.values.IntNative;
 import ch.szclsb.main.ffm.impl.Vector4;
 
@@ -21,9 +21,9 @@ public interface Api {
 
     void vec4add(final Vector4 a, final Vector4 b, Vector4 r) throws Throwable;
 
-    void pointAddRef(final Ref<PointNative> a, final Ref<PointNative> b, Ref<PointNative> r) throws Throwable;
+    void pointAddRef(final Address<Point> a, final Address<Point> b, Address<Point> r) throws Throwable;
 
-    PointNative pointAdd(final PointNative a, final PointNative b) throws Throwable;
+    Point pointAdd(final Point a, final Point b) throws Throwable;
 
     Pointer createInstance(final int a, final int b) throws Throwable;
 
@@ -33,7 +33,7 @@ public interface Api {
 
     int incrementInt(int value) throws Throwable;
 
-    void incrementPInt(Ref<IntNative> pValue) throws Throwable;
+    void incrementPInt(Address<IntNative> pValue) throws Throwable;
 
-    void incrementPpInt(Ref<Ref<IntNative>> ppValue) throws Throwable;
+    void incrementPpInt(Address<Address<IntNative>> ppValue) throws Throwable;
 }

@@ -1,35 +1,24 @@
 package ch.szclsb.main.ffm.impl.pointer;
 
-import ch.szclsb.main.ffm.export.Segment;
-import ch.szclsb.main.ffm.export.Ref;
+import ch.szclsb.main.ffm.export.Native;
+import ch.szclsb.main.ffm.export.Address;
 
 import java.lang.foreign.MemorySegment;
 
-public class SegmentPointer<T extends Segment> implements Ref<T> {
-//    private final Class<T> rClass;
-    private T reference;
+public class SegmentPointer<T extends Native> implements Address<T> {
+    private M
 
-    public SegmentPointer(Class<T> rClass) {
-//        this.rClass = rClass;
+    private SegmentPointer() {
+        ;
     }
-
-//    @Override
-//    public Class<T> getRefClass() {
-//        return rClass;
-//    }
 
     @Override
     public T dereference() {
-        return reference;
+        return null;
     }
 
     @Override
     public void reference(T value) {
-        this.reference = value;
-    }
-
-    @Override
-    public MemorySegment getAddress() {
-        return reference == null ? MemorySegment.NULL : reference.getAddress();
+        this.segment = value == null ? MemorySegment.NULL : value.getSegment().reinterpret(0);
     }
 }

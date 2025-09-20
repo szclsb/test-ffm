@@ -1,13 +1,10 @@
 package ch.szclsb.main.ffm.impl;
 
 import ch.szclsb.main.ffm.export.*;
-import ch.szclsb.main.ffm.export.structs.PointNative;
-import ch.szclsb.main.ffm.export.structs.PointNativeFactory;
+import ch.szclsb.main.ffm.export.structs.Point;
 import ch.szclsb.main.ffm.export.values.IntNative;
-import ch.szclsb.main.ffm.export.values.IntNativeFactory;
 import ch.szclsb.main.ffm.impl.pointer.AddressPointer;
-import ch.szclsb.main.ffm.impl.pointer.SegmentPointer;
-import ch.szclsb.main.ffm.impl.structs.PointNativeImpl;
+import ch.szclsb.main.ffm.impl.structs.PointImpl;
 import ch.szclsb.main.ffm.impl.values.IntNativeImpl;
 
 import java.lang.foreign.SegmentAllocator;
@@ -22,7 +19,7 @@ public class SegmentFactoryImpl implements SegmentFactory {
         this.allocator = allocator;
         this.drefMap = Map.of(
                 IntNativeImpl.class, IntNativeImpl::ofAddress,
-                PointNativeImpl.class, PointNativeImpl::ofAddress
+                PointImpl.class, PointImpl::ofAddress
         );
     }
 
@@ -77,47 +74,47 @@ public class SegmentFactoryImpl implements SegmentFactory {
     }
 
     @Override
-    public Ref<IntNative> createIntP() {
+    public Address<IntNative> createIntP() {
         return new SegmentPointer<>(null);
     }
 
     @Override
-    public Ref<IntNative> createIntP(IntNative value) {
+    public Address<IntNative> createIntP(IntNative value) {
         var p = new SegmentPointer<IntNative>(null);
         p.reference(value);
         return p;
     }
 
     @Override
-    public Ref<Ref<IntNative>> createIntPP() {
+    public Address<Address<IntNative>> createIntPP() {
         return AddressPointer.allocate(allocator, address -> createIntP(IntNativeImpl.ofAddress(address)));
     }
 
     @Override
-    public Ref<Ref<IntNative>> createIntPP(Ref<IntNative> ref) {
+    public Address<Address<IntNative>> createIntPP(Address<IntNative> ref) {
         var pp = createIntPP();
         pp.reference(ref);
         return pp;
     }
 
     @Override
-    public PointNative allocatePoint() {
-        return PointNativeImpl.allocate(allocator);
+    public Point allocatePoint() {
+        return PointImpl.allocate(allocator);
     }
 
     @Override
-    public PointNative allocatePoint(int x, int y) {
-        return PointNativeImpl.allocate(allocator, x, y);
+    public Point allocatePoint(int x, int y) {
+        return PointImpl.allocate(allocator, x, y);
     }
 
     @Override
-    public Ref<PointNative> createPointP() {
+    public Address<Point> createPointP() {
         return new SegmentPointer<>(null);
     }
 
     @Override
-    public Ref<PointNative> createPointP(PointNative value) {
-        var p = new SegmentPointer<PointNative>(null);
+    public Address<Point> createPointP(Point value) {
+        var p = new SegmentPointer<Point>(null);
         p.reference(value);
         return p;
     }

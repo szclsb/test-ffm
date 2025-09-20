@@ -1,6 +1,6 @@
 package ch.szclsb.main.ffm.impl.pointer;
 
-import ch.szclsb.main.ffm.export.Ref;
+import ch.szclsb.main.ffm.export.Address;
 import ch.szclsb.main.ffm.impl.BaseSegment;
 
 import java.lang.foreign.MemorySegment;
@@ -8,7 +8,7 @@ import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
 import java.util.function.Function;
 
-public class AddressPointer<T extends Ref<?>> extends BaseSegment implements Ref<T> {
+public class AddressPointer<T extends Address<?>> extends BaseSegment implements Address<T> {
     public static final ValueLayout.OfLong LAYOUT = ValueLayout.JAVA_LONG;
     private final Function<Long, T> deref;
 //    private final Class<T> rClass;
@@ -34,7 +34,7 @@ public class AddressPointer<T extends Ref<?>> extends BaseSegment implements Ref
         this.segment.set(LAYOUT, 0, value.getAddress().address());
     }
 
-    public static <T extends Ref<?>> Ref<T> allocate(SegmentAllocator allocator, Function<Long, T> deref) {
+    public static <T extends Address<?>> Address<T> allocate(SegmentAllocator allocator, Function<Long, T> deref) {
         return new AddressPointer<>(allocator.allocate(LAYOUT), null, deref);
     }
 }

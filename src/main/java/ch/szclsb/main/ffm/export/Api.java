@@ -1,7 +1,7 @@
 package ch.szclsb.main.ffm.export;
 
-import ch.szclsb.main.ffm.export.structs.Point;
-import ch.szclsb.main.ffm.export.values.IntNative;
+import ch.szclsb.main.ffm.export.structs.ForeignPoint;
+import ch.szclsb.main.ffm.export.values.ForeignInt;
 import ch.szclsb.main.ffm.impl.Vector4;
 
 import java.lang.foreign.MemorySegment;
@@ -21,19 +21,19 @@ public interface Api {
 
     void vec4add(final Vector4 a, final Vector4 b, Vector4 r) throws Throwable;
 
-    void pointAddRef(final Address<Point> a, final Address<Point> b, Address<Point> r) throws Throwable;
+    void pointAddRef(final Address<ForeignPoint> a, final Address<ForeignPoint> b, Address<ForeignPoint> r) throws Throwable;
 
-    Point pointAdd(final Point a, final Point b) throws Throwable;
+    ForeignPoint pointAdd(final ForeignPoint a, final ForeignPoint b) throws Throwable;
 
-    Pointer createInstance(final int a, final int b) throws Throwable;
+    Address<?> createInstance(final int a, final int b) throws Throwable;
 
-    void useInstance(Pointer instance) throws Throwable;
+    void useInstance(Address<?> instance) throws Throwable;
 
-    void destroyInstance(Pointer instance) throws Throwable;
+    void destroyInstance(Address<?> instance) throws Throwable;
 
     int incrementInt(int value) throws Throwable;
 
-    void incrementPInt(Address<IntNative> pValue) throws Throwable;
+    void incrementPInt(ForeignInt pValue) throws Throwable;
 
-    void incrementPpInt(Address<Address<IntNative>> ppValue) throws Throwable;
+    void incrementPpInt(AddressPointer<ForeignInt> ppValue) throws Throwable;
 }

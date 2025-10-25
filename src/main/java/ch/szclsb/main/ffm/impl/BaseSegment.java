@@ -1,11 +1,11 @@
 package ch.szclsb.main.ffm.impl;
 
 
-import ch.szclsb.main.ffm.export.Native;
+import ch.szclsb.main.ffm.export.HasSegment;
 
 import java.lang.foreign.MemorySegment;
 
-public abstract class BaseSegment implements Native {
+public abstract class BaseSegment implements HasSegment {
     protected final MemorySegment segment;
 
     public BaseSegment(MemorySegment memorySegment) {

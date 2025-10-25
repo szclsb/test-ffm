@@ -1,8 +1,9 @@
 package ch.szclsb.main.ffm;
 
 import ch.szclsb.main.ffm.export.Api;
+import ch.szclsb.main.ffm.export.ForeignFactory;
 import ch.szclsb.main.ffm.impl.ApiImpl;
-import ch.szclsb.main.ffm.impl.SegmentFactoryImpl;
+import ch.szclsb.main.ffm.impl.ForeignFactoryImpl;
 import ch.szclsb.main.ffm.impl.Vector4;
 
 import java.lang.foreign.Arena;
@@ -13,7 +14,7 @@ public class Main {
 
         try(var session = Arena.ofShared()) {
             Api nativeMethodHandler = new ApiImpl(session);
-            SegmentFactory segmentFactory = new SegmentFactoryImpl(session);
+            ForeignFactory foreignFactory = new ForeignFactoryImpl(session);
 
             nativeMethodHandler.printHello();
 
@@ -40,20 +41,16 @@ public class Main {
 
             System.out.printf("r[%.2f, %.2f, %.2f, %.2f]%n", result[0], result[1], result[2], result[3]);
 
-            var p1a = segmentFactory.createPointP(segmentFactory.allocatePoint());
-            p1a.dereference().setX(1);
-            p1a.dereference().setY(2);
-            var p2a = segmentFactory.createPointP(segmentFactory.allocatePoint());;
-            p2a.dereference().setX(3);
-            p2a.dereference().setY(4);
-            var p3a = segmentFactory.createPointP(segmentFactory.allocatePoint());;
-            nativeMethodHandler.pointAddRef(p1a, p2a, p3a);
-            System.out.printf("r{%d, %d}%n", p3a.dereference().getX(), p3a.dereference().getY());
+            var p1a = foreignFactory.allocatePoint(1, 2);
+            var p2a = foreignFactory.allocatePoint(3, 4);
+            var p3a = foreignFactory.allocatePoint();
+            nativeMethodHandler.pointAddRef(p1a.getAddress(), p2a.getAddress(), p3a.getAddress());
+            System.out.printf("r{%d, %d}%n", p3a.getX(), p3a.getY());
 
-            var p1b = segmentFactory.allocatePoint();
+            var p1b = foreignFactory.allocatePoint();
             p1b.setX(4);
             p1b.setY(3);
-            var p2b = segmentFactory.allocatePoint();
+            var p2b = foreignFactory.allocatePoint();
             p2b.setX(1);
             p2b.setY(2);
             var p3b = nativeMethodHandler.pointAdd(p1b, p2b);
@@ -66,14 +63,14 @@ public class Main {
             var inc1 = nativeMethodHandler.incrementInt(32);
             System.out.printf("inc1 of 32 is %d%n", inc1);
 
-            var inc2 = segmentFactory.createIntP(segmentFactory.allocateInt(42));
+            var inc2 = foreignFactory.allocateInt(42);
             nativeMethodHandler.incrementPInt(inc2);
-            System.out.printf("inc2 of 42 is %d%n", inc2.dereference().getValue());
+            System.out.printf("inc2 of 42 is %d%n", inc2.getValue());
 
-            var inc3 = segmentFactory.createIntPP(segmentFactory.createIntP(segmentFactory.allocateInt(52)));
+            var inc3 = foreignFactory.reference(foreignFactory.allocateInt(52).getAddress());
             //inc3.reference(inc2);
             nativeMethodHandler.incrementPpInt(inc3);
-            System.out.printf("inc3 of 52 is %d%n", inc3.dereference().dereference().getValue());
+            System.out.printf("inc3 of 52 is %d%n", foreignFactory.readInt(inc3.dereference()).getValue());
         }
     }
 }

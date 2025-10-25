@@ -1,4 +1,7 @@
 package ch.szclsb.main.ffm.export;
 
-public interface Address<T> extends Native {
+import java.lang.foreign.MemorySegment;
+
+public interface Address<T extends HasAddress<?>> extends HasSegment {
+    Address<?> NULL = () -> MemorySegment.NULL;
 }

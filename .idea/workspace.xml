@@ -4,28 +4,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aca7e4cd-db20-47a4-b9cd-6e61d5520f00" name="Changes" comment="impl factory">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Address.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Native.java" afterDir="false" />
+    <list default="true" id="aca7e4cd-db20-47a4-b9cd-6e61d5520f00" name="Changes" comment="tried new pointer stuff">
+      <change afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/AddressPointer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/ForeignFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/HasAddress.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/values/ForeignInt.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/ForeignFactoryImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/pointer/AddressPointerImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Address.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Api.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Api.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Pointer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Ref.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Segment.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/SegmentFactory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/structs/PointNative.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/structs/Point.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/structs/PointNativeFactory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/values/IntNative.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/values/IntNativeFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/Native.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/HasSegment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/structs/Point.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/export/structs/ForeignPoint.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/ApiImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/ApiImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/BaseSegment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/BaseSegment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/SegmentFactoryImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/SegmentFactoryImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/pointer/AddressPointer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/pointer/AddressPointer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/pointer/SegmentPointer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/pointer/SegmentPointer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/pointer/VoidPointer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/structs/PointNativeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/structs/PointImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/values/IntNativeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/values/IntNativeImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/SegmentFactoryImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/pointer/AddressPointer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/pointer/SegmentPointer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/structs/PointImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/structs/ForeignPointImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/values/IntNativeImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/szclsb/main/ffm/impl/values/ForeignIntImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -103,31 +102,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Upgrade Gradle wrapper.executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.test-ffm [:ch.szclsb.main.ffm.Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.test-ffm [build].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;ignore.preview.features.used&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;19&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Projects/test-ffm&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Upgrade Gradle wrapper.executor": "Run",
+    "Gradle.test-ffm [:ch.szclsb.main.ffm.Main.main()].executor": "Run",
+    "Gradle.test-ffm [build].executor": "Run",
+    "Gradle.test-ffm [clean].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "ignore.preview.features.used": "true",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "19",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Projects/test-ffm",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Projects\test-ffm\lib" />
@@ -208,6 +209,28 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="test-ffm [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="test-ffm [compileJava]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -232,14 +255,16 @@
     </configuration>
     <list>
       <item itemvalue="Application.Main" />
+      <item itemvalue="Gradle.test-ffm [clean]" />
       <item itemvalue="Gradle.test-ffm [build]" />
       <item itemvalue="Gradle.test-ffm [buildNative]" />
       <item itemvalue="Gradle.test-ffm [compileJava]" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.test-ffm [compileJava]" />
         <item itemvalue="Gradle.test-ffm [build]" />
+        <item itemvalue="Gradle.test-ffm [clean]" />
+        <item itemvalue="Gradle.test-ffm [compileJava]" />
         <item itemvalue="Gradle.test-ffm [buildNative]" />
         <item itemvalue="Application.Main" />
       </list>
@@ -248,8 +273,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
-        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-IU-252.26199.169" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
       </set>
     </attachedChunks>
   </component>
@@ -288,7 +313,11 @@
       <workItem from="1755245686810" duration="9688000" />
       <workItem from="1758038689072" duration="641000" />
       <workItem from="1758300380789" duration="4065000" />
-      <workItem from="1758363760450" duration="3115000" />
+      <workItem from="1758363760450" duration="3134000" />
+      <workItem from="1758452805391" duration="1747000" />
+      <workItem from="1758554715451" duration="18000" />
+      <workItem from="1759512488383" duration="12000" />
+      <workItem from="1761392841066" duration="7518000" />
     </task>
     <task id="LOCAL-00001" summary="removed gradle support, since gradle 7.5.1 does not support java 19">
       <created>1660984159964</created>
@@ -358,7 +387,15 @@
       <option name="project" value="LOCAL" />
       <updated>1754675573443</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="tried new pointer stuff">
+      <option name="closed" value="true" />
+      <created>1758368755218</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1758368755218</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -385,7 +422,8 @@
     <MESSAGE value="updated return pointer" />
     <MESSAGE value="added pointer interface" />
     <MESSAGE value="added doc" />
-    <option name="LAST_COMMIT_MESSAGE" value="added doc" />
+    <MESSAGE value="tried new pointer stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="tried new pointer stuff" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

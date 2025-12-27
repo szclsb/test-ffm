@@ -67,7 +67,7 @@ public class Main {
             nativeMethodHandler.incrementPInt(inc2);
             System.out.printf("inc2 of 42 is %d%n", inc2.getValue());
 
-            var inc3 = foreignFactory.reference(foreignFactory.allocateInt(52).getAddress());
+            var inc3 = foreignFactory.createReference(foreignFactory.allocateInt(52).getAddress());
             //inc3.reference(inc2);
             nativeMethodHandler.incrementPpInt(inc3);
             System.out.printf("inc3 of 52 is %d%n", foreignFactory.readInt(inc3.dereference()).getValue());

@@ -1,6 +1,5 @@
 package ch.szclsb.main.ffm.impl.structs;
 
-import ch.szclsb.main.ffm.export.Address;
 import ch.szclsb.main.ffm.export.structs.ForeignPoint;
 import ch.szclsb.main.ffm.impl.BaseSegment;
 
@@ -10,7 +9,7 @@ import java.lang.foreign.SegmentAllocator;
 import static java.lang.foreign.ValueLayout.JAVA_INT;
 
 public class ForeignPointImpl extends BaseSegment implements ForeignPoint {
-    private ForeignPointImpl(MemorySegment memorySegment) {
+    public ForeignPointImpl(MemorySegment memorySegment) {
         super(memorySegment);
     }
 

@@ -1,8 +1,6 @@
 package ch.szclsb.main.ffm.impl.values;
 
-import ch.szclsb.main.ffm.export.Address;
 import ch.szclsb.main.ffm.export.values.ForeignInt;
-import ch.szclsb.main.ffm.export.structs.ForeignPoint;
 import ch.szclsb.main.ffm.impl.BaseSegment;
 
 import java.lang.foreign.MemorySegment;
@@ -24,11 +22,6 @@ public class ForeignIntImpl extends BaseSegment implements ForeignInt {
     @Override
     public void setValue(int value) {
         segment.set(LAYOUT, 0, value);
-    }
-
-    @Override
-    public Address<ForeignInt> getAddress() {
-        return () -> segment.reinterpret(0);
     }
 
     public static ForeignInt allocate(SegmentAllocator allocator) {

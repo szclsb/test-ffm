@@ -21,15 +21,15 @@ public interface Api {
 
     void vec4add(final Vector4 a, final Vector4 b, Vector4 r) throws Throwable;
 
-    void pointAddRef(final Address<ForeignPoint> a, final Address<ForeignPoint> b, Address<ForeignPoint> r) throws Throwable;
+    void pointAddRef(final Vector4 a, final Vector4 b, Vector4 r) throws Throwable;
 
     ForeignPoint pointAdd(final ForeignPoint a, final ForeignPoint b) throws Throwable;
 
-    Address<?> createInstance(final int a, final int b) throws Throwable;
+    HasSegment createInstance(final int a, final int b) throws Throwable;
 
-    void useInstance(Address<?> instance) throws Throwable;
+    void useInstance(HasSegment instance) throws Throwable;
 
-    void destroyInstance(Address<?> instance) throws Throwable;
+    void destroyInstance(HasSegment instance) throws Throwable;
 
     int incrementInt(int value) throws Throwable;
 

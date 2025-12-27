@@ -1,7 +1,5 @@
 package ch.szclsb.main.ffm.export.structs;
 
-import ch.szclsb.main.ffm.export.HasAddress;
-
 import java.lang.foreign.MemoryLayout;
 import java.lang.foreign.StructLayout;
 

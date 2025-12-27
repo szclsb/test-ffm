@@ -2,10 +2,10 @@ package ch.szclsb.main.ffm.export;
 
 import java.lang.foreign.AddressLayout;
 
-public interface AddressPointer<T extends HasAddress<?>> extends HasSegment {
+public interface AddressPointer<R extends HasSegment> extends HasSegment {
     AddressLayout LAYOUT = AddressLayout.ADDRESS;
 
-    Address<T> dereference();
+    R dereference();
 
-    void reference(Address<T> address);
+    void reference(R object);
 }

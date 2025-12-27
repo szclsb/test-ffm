@@ -1,9 +1,8 @@
 package ch.szclsb.main.ffm.impl;
 
-import ch.szclsb.main.ffm.export.Address;
 import ch.szclsb.main.ffm.export.AddressPointer;
 import ch.szclsb.main.ffm.export.ForeignFactory;
-import ch.szclsb.main.ffm.export.HasAddress;
+import ch.szclsb.main.ffm.export.HasSegment;
 import ch.szclsb.main.ffm.export.structs.ForeignPoint;
 import ch.szclsb.main.ffm.export.values.ForeignInt;
 import ch.szclsb.main.ffm.impl.pointer.AddressPointerImpl;
@@ -11,23 +10,38 @@ import ch.szclsb.main.ffm.impl.structs.ForeignPointImpl;
 import ch.szclsb.main.ffm.impl.values.ForeignIntImpl;
 
 import java.lang.foreign.Arena;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ForeignFactoryImpl implements ForeignFactory {
+    private static final Map<Class<?>, AddressTarget<?>> addressTargetMap = collectAddressTargets();
+
+    private static Map<Class<?>, AddressTarget<?>> collectAddressTargets() {
+        Map<Class<?>, AddressTarget<?>> result = new HashMap<>();
+        result.put(ForeignPoint.class, new AddressTarget<>(ForeignPoint.LAYOUT, ForeignPointImpl::new));
+        return result;
+    }
+
     private final Arena session;
 
     public ForeignFactoryImpl(Arena session) {
         this.session = session;
     }
 
-    @Override
-    public <T extends HasAddress<?>> AddressPointer<T> allocatePointer() {
-        return AddressPointerImpl.allocate(session);
+    @SuppressWarnings("unchecked")
+    private <R extends HasSegment> AddressTarget<R> getAddressConstructor(Class<R> refClass) {
+        return (AddressTarget<R>) addressTargetMap.get(refClass);
     }
 
     @Override
-    public <T extends HasAddress<?>> AddressPointer<T> reference(Address<T> address) {
-        AddressPointer<T> addressPointer = allocatePointer();
-        addressPointer.reference(address);
+    public <R extends HasSegment> AddressPointer<R> allocatePointer(Class<R> refClass) {
+        return AddressPointerImpl.allocate(session, getAddressConstructor(refClass));
+    }
+
+    @Override
+    public <R extends HasSegment> AddressPointer<R> createReference(Class<R> refClass, R refObject) {
+        var addressPointer = this.allocatePointer(refClass);
+        addressPointer.reference(refObject);
         return addressPointer;
     }
 
@@ -44,11 +58,6 @@ public class ForeignFactoryImpl implements ForeignFactory {
     }
 
     @Override
-    public ForeignInt readInt(Address<ForeignInt> address) {
-        return ForeignIntImpl.read(address);
-    }
-
-    @Override
     public ForeignPoint allocatePoint() {
         return ForeignPointImpl.allocate(session);
     }
@@ -59,10 +68,5 @@ public class ForeignFactoryImpl implements ForeignFactory {
         foreignPoint.setX(x);
         foreignPoint.setY(y);
         return foreignPoint;
-    }
-
-    @Override
-    public ForeignPoint readPoint(Address<ForeignPoint> address) {
-        return ForeignPointImpl.read(address);
     }
 }

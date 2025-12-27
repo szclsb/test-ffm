@@ -1,29 +1,34 @@
 package ch.szclsb.main.ffm.impl.pointer;
 
-import ch.szclsb.main.ffm.export.Address;
 import ch.szclsb.main.ffm.export.AddressPointer;
-import ch.szclsb.main.ffm.export.HasAddress;
+import ch.szclsb.main.ffm.export.HasSegment;
+import ch.szclsb.main.ffm.impl.AddressTarget;
 import ch.szclsb.main.ffm.impl.BaseSegment;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.SegmentAllocator;
 
-public class AddressPointerImpl<T extends HasAddress<?>> extends BaseSegment implements AddressPointer<T> {
-    private AddressPointerImpl(MemorySegment memorySegment) {
+public class AddressPointerImpl<R extends HasSegment> extends BaseSegment implements AddressPointer<R> {
+    private final AddressTarget<R> addressTarget;
+
+    private AddressPointerImpl(MemorySegment memorySegment, AddressTarget<R> addressTarget) {
         super(memorySegment);
+        this.addressTarget = addressTarget;
     }
 
     @Override
-    public Address<T> dereference() {
-        return () -> segment.getAtIndex(LAYOUT, 0);
+    public R dereference() {
+        var targetSegment = segment.getAtIndex(LAYOUT.withTargetLayout(addressTarget.targetLayout()), 0);
+        return addressTarget.constructor().apply(targetSegment);
     }
 
     @Override
-    public void reference(Address<T> ref) {
-        this.segment.set(LAYOUT, 0, ref.getSegment());
+    public void reference(R object) {
+        this.segment.set(LAYOUT, 0, object.getSegment());
     }
 
-    public static <T extends HasAddress<?>> AddressPointerImpl<T> allocate(SegmentAllocator allocator) {
-        return new AddressPointerImpl<>(allocator.allocate(LAYOUT));
+    public static <R extends HasSegment> AddressPointerImpl<R> allocate(SegmentAllocator allocator,
+                                                                        AddressTarget<R> addressConstructor) {
+        return new AddressPointerImpl<>(allocator.allocate(LAYOUT), addressConstructor);
     }
 }

@@ -1,7 +1,5 @@
 package ch.szclsb.test.ffm;
 
-import ch.szclsb.test.ffm.api.FfmApiProvider;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;

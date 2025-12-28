@@ -1,4 +1,6 @@
-package ch.szclsb.test.ffm.api;
+package ch.szclsb.test.ffm;
+
+import ch.szclsb.test.ffm.api.FfmApi;
 
 import java.lang.foreign.Arena;
 

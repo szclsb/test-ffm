@@ -1,9 +1,7 @@
-.gradle
+
 build/
 build-native/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+app/**/resources/providers/test-ffm-impl*.jar
 
 ### IntelliJ IDEA ###
 .idea/
@@ -11,8 +9,7 @@ build-native/
 *.iml
 *.ipr
 out/
-!**/src/main/**/out/
-!**/src/test/**/out/
+target/
 
 ### Eclipse ###
 .apt_generated
@@ -38,3 +35,4 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+

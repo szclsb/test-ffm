@@ -7,30 +7,22 @@
     <groupId>ch.szclsb.test</groupId>
     <artifactId>test-ffm</artifactId>
     <version>1.0-SNAPSHOT</version>
-<!--    <packaging>pom</packaging>-->
-<!--    <modules>-->
-<!--        <module>api</module>-->
-<!--        <module>impl</module>-->
-<!--        <module>app</module>-->
-<!--    </modules>-->
+    <packaging>pom</packaging>
+    <modules>
+        <module>api</module>
+        <module>impl</module>
+        <module>app</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>25</maven.compiler.source>
         <maven.compiler.target>25</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <app.providers>${maven.multiModuleProjectDirectory}/app/src/main/resources/providers</app.providers>
     </properties>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
@@ -47,6 +39,19 @@
                 </configuration>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.10.1</version>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>

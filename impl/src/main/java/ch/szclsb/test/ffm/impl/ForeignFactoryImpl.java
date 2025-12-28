@@ -1,14 +1,16 @@
 package ch.szclsb.test.ffm.impl;
 
 import ch.szclsb.test.ffm.api.Address;
-import ch.szclsb.test.ffm.api.AddressPointer;
+import ch.szclsb.test.ffm.api.pointer.AddressPointer;
 import ch.szclsb.test.ffm.api.ForeignFactory;
 import ch.szclsb.test.ffm.api.HasAddress;
 import ch.szclsb.test.ffm.api.structs.ForeignPoint;
 import ch.szclsb.test.ffm.api.values.ForeignInt;
+import ch.szclsb.test.ffm.api.vectors.ForeignVec4;
 import ch.szclsb.test.ffm.impl.pointer.AddressPointerImpl;
 import ch.szclsb.test.ffm.impl.structs.ForeignPointImpl;
 import ch.szclsb.test.ffm.impl.values.ForeignIntImpl;
+import ch.szclsb.test.ffm.impl.vectors.ForeignVec4Impl;
 
 import java.lang.foreign.Arena;
 
@@ -64,5 +66,22 @@ public class ForeignFactoryImpl implements ForeignFactory {
     @Override
     public ForeignPoint readPoint(Address<ForeignPoint> address) {
         return ForeignPointImpl.read(address);
+    }
+
+    @Override
+    public ForeignVec4 allocateVec4() {
+        return ForeignVec4Impl.allocate(session);
+    }
+
+    @Override
+    public ForeignVec4 allocateVec4(float x, float y, float z, float w) {
+        var vec4 = ForeignVec4Impl.allocate(session);
+        vec4.setValues(x, y, z, w);
+        return vec4;
+    }
+
+    @Override
+    public ForeignVec4 readVec4(Address<ForeignVec4> address) {
+        return ForeignVec4Impl.read(address);
     }
 }

@@ -25,11 +25,6 @@ public class ForeignIntImpl extends BaseSegment implements ForeignInt {
         segment.set(LAYOUT, 0, value);
     }
 
-    @Override
-    public Address<ForeignInt> getAddress() {
-        return () -> segment.reinterpret(0);
-    }
-
     public static ForeignInt allocate(SegmentAllocator allocator) {
         return new ForeignIntImpl(allocator.allocate(LAYOUT));
     }

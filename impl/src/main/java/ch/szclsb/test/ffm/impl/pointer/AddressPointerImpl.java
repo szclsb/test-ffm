@@ -1,8 +1,8 @@
 package ch.szclsb.test.ffm.impl.pointer;
 
 import ch.szclsb.test.ffm.api.Address;
-import ch.szclsb.test.ffm.api.AddressPointer;
 import ch.szclsb.test.ffm.api.HasAddress;
+import ch.szclsb.test.ffm.api.pointer.AddressPointer;
 import ch.szclsb.test.ffm.impl.BaseSegment;
 
 import java.lang.foreign.MemorySegment;

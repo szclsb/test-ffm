@@ -1,4 +1,8 @@
-package ch.szclsb.test.ffm.api;
+package ch.szclsb.test.ffm.api.pointer;
+
+import ch.szclsb.test.ffm.api.Address;
+import ch.szclsb.test.ffm.api.HasAddress;
+import ch.szclsb.test.ffm.api.HasSegment;
 
 import java.lang.foreign.AddressLayout;
 

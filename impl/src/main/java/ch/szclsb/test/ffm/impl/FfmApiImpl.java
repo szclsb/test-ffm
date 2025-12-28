@@ -1,9 +1,10 @@
 package ch.szclsb.test.ffm.impl;
 
 import ch.szclsb.test.ffm.api.Address;
-import ch.szclsb.test.ffm.api.AddressPointer;
+import ch.szclsb.test.ffm.api.pointer.AddressPointer;
 import ch.szclsb.test.ffm.api.FfmApi;
 import ch.szclsb.test.ffm.api.values.ForeignInt;
+import ch.szclsb.test.ffm.api.vectors.ForeignVec4;
 import ch.szclsb.test.ffm.impl.structs.ForeignPointImpl;
 import ch.szclsb.test.ffm.api.structs.ForeignPoint;
 
@@ -129,10 +130,10 @@ public class FfmApiImpl implements FfmApi {
         return r;
     }
 
-//    @Override
-//    public void vec4add(Vector4 a, Vector4 b, Vector4 r) throws Throwable {
-//        vec4addNative.invoke(a.getSegment(), b.getSegment(), r.getSegment());
-//    }
+    @Override
+    public void vec4add(ForeignVec4 a, ForeignVec4 b, ForeignVec4 r) throws Throwable {
+        vec4addNative.invoke(a.getSegment(), b.getSegment(), r.getSegment());
+    }
 
     @Override
     public void pointAddRef(Address<ForeignPoint> a, Address<ForeignPoint> b, Address<ForeignPoint> r) throws Throwable {

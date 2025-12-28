@@ -1,7 +1,9 @@
 package ch.szclsb.test.ffm.api;
 
+import ch.szclsb.test.ffm.api.pointer.AddressPointer;
 import ch.szclsb.test.ffm.api.structs.ForeignPoint;
 import ch.szclsb.test.ffm.api.values.ForeignInt;
+import ch.szclsb.test.ffm.api.vectors.ForeignVec4;
 
 import java.lang.foreign.MemorySegment;
 
@@ -18,7 +20,7 @@ public interface FfmApi {
 
     float addFloat(final float a, final float b) throws Throwable;
 
-//    void vec4add(final Vector4 a, final Vector4 b, Vector4 r) throws Throwable;
+    void vec4add(final ForeignVec4 a, final ForeignVec4 b, ForeignVec4 r) throws Throwable;
 
     void pointAddRef(final Address<ForeignPoint> a, final Address<ForeignPoint> b, Address<ForeignPoint> r) throws Throwable;
 

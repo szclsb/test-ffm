@@ -24,17 +24,17 @@ public class Main {
             var x = api.addFloat(1.0f, 2.0f);
             System.out.printf("r%f%n", x);
 
-//            var a = new Vector4(session);
-//            var b = new Vector4(session);
-//            var r = new Vector4(session);
-//
-//            a.setValues(1f, 2f, 3f, 4f);
-//            b.setValues(6f, 7f, 9f, 10f);
-//
-//            nativeMethodHandler.vec4add(a, b, r);
-//            var result = r.toArray();
-//
-//            System.out.printf("r[%.2f, %.2f, %.2f, %.2f]%n", result[0], result[1], result[2], result[3]);
+            var a = factory.allocateVec4();
+            var b = factory.allocateVec4();
+            var r = factory.allocateVec4();
+
+            a.setValues(1f, 2f, 3f, 4f);
+            b.setValues(6f, 7f, 9f, 10f);
+
+            api.vec4add(a, b, r);
+            var result = r.toArray();
+
+            System.out.printf("r[%.2f, %.2f, %.2f, %.2f]%n", result[0], result[1], result[2], result[3]);
 
             var p1a = factory.allocatePoint(1, 2);
             var p2a = factory.allocatePoint(3, 4);

@@ -5,10 +5,11 @@ import java.lang.foreign.ValueLayout;
 
 public class Main {
     static void main(String[] args) throws Throwable {
-        try(var spiLoader = new SpiLoader();
-            var session = Arena.ofShared()) {
+        try (var spiLoader = new SpiLoader();
+             var session = Arena.ofShared()) {
             var provider = spiLoader.providers().getFirst();
             var api = provider.getApi(session);
+            var factory = provider.getFactory(session);
 
             api.printHello();
 
@@ -35,36 +36,36 @@ public class Main {
 //
 //            System.out.printf("r[%.2f, %.2f, %.2f, %.2f]%n", result[0], result[1], result[2], result[3]);
 
-//            var p1a = foreignFactory.allocatePoint(1, 2);
-//            var p2a = foreignFactory.allocatePoint(3, 4);
-//            var p3a = foreignFactory.allocatePoint();
-//            nativeMethodHandler.pointAddRef(p1a.getAddress(), p2a.getAddress(), p3a.getAddress());
-//            System.out.printf("r{%d, %d}%n", p3a.getX(), p3a.getY());
-//
-//            var p1b = foreignFactory.allocatePoint();
-//            p1b.setX(4);
-//            p1b.setY(3);
-//            var p2b = foreignFactory.allocatePoint();
-//            p2b.setX(1);
-//            p2b.setY(2);
-//            var p3b = nativeMethodHandler.pointAdd(p1b, p2b);
-//            System.out.printf("r{%d, %d}%n", p3b.getX(), p3b.getY());
-//
-//            var instance = nativeMethodHandler.createInstance(12, -15);
-//            nativeMethodHandler.useInstance(instance);
-//            nativeMethodHandler.destroyInstance(instance);
-//
-//            var inc1 = nativeMethodHandler.incrementInt(32);
-//            System.out.printf("inc1 of 32 is %d%n", inc1);
-//
-//            var inc2 = foreignFactory.allocateInt(42);
-//            nativeMethodHandler.incrementPInt(inc2);
-//            System.out.printf("inc2 of 42 is %d%n", inc2.getValue());
-//
-//            var inc3 = foreignFactory.reference(foreignFactory.allocateInt(52).getAddress());
-//            //inc3.reference(inc2);
-//            nativeMethodHandler.incrementPpInt(inc3);
-//            System.out.printf("inc3 of 52 is %d%n", foreignFactory.readInt(inc3.dereference()).getValue());
+            var p1a = factory.allocatePoint(1, 2);
+            var p2a = factory.allocatePoint(3, 4);
+            var p3a = factory.allocatePoint();
+            api.pointAddRef(p1a.getAddress(), p2a.getAddress(), p3a.getAddress());
+            System.out.printf("r{%d, %d}%n", p3a.getX(), p3a.getY());
+
+            var p1b = factory.allocatePoint();
+            p1b.setX(4);
+            p1b.setY(3);
+            var p2b = factory.allocatePoint();
+            p2b.setX(1);
+            p2b.setY(2);
+            var p3b = api.pointAdd(p1b, p2b);
+            System.out.printf("r{%d, %d}%n", p3b.getX(), p3b.getY());
+
+            var instance = api.createInstance(12, -15);
+            api.useInstance(instance);
+            api.destroyInstance(instance);
+
+            var inc1 = api.incrementInt(32);
+            System.out.printf("inc1 of 32 is %d%n", inc1);
+
+            var inc2 = factory.allocateInt(42);
+            api.incrementPInt(inc2);
+            System.out.printf("inc2 of 42 is %d%n", inc2.getValue());
+
+            var inc3 = factory.reference(factory.allocateInt(52).getAddress());
+            //inc3.reference(inc2);
+            api.incrementPpInt(inc3);
+            System.out.printf("inc3 of 52 is %d%n", factory.readInt(inc3.dereference()).getValue());
         }
     }
 }

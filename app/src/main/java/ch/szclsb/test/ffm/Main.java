@@ -2,13 +2,19 @@ package ch.szclsb.test.ffm;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.ValueLayout;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Main {
+    private static Path dllPath() {
+        return Paths.get(System.getProperty("user.dir"), "build-native", "Debug", "ffm.dll");
+    }
+
     static void main(String[] args) throws Throwable {
         try (var spiLoader = new SpiLoader();
              var session = Arena.ofShared()) {
             var provider = spiLoader.providers().getFirst();
-            var api = provider.getApi(session);
+            var api = provider.getApi(session, dllPath());
             var factory = provider.getFactory(session);
 
             api.printHello();

@@ -6,11 +6,12 @@ import ch.szclsb.test.ffm.impl.FfmApiImpl;
 import ch.szclsb.test.ffm.impl.ForeignFactoryImpl;
 
 import java.lang.foreign.Arena;
+import java.nio.file.Path;
 
 public class FfmApiProviderImpl implements FfmApiProvider {
     @Override
-    public FfmApi getApi(Arena session) {
-        return new FfmApiImpl(session);
+    public FfmApi getApi(Arena session, Path dllPath) {
+        return new FfmApiImpl(session, dllPath);
     }
 
     @Override

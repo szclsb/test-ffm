@@ -11,6 +11,8 @@ import ch.szclsb.test.ffm.api.structs.ForeignPoint;
 import java.lang.foreign.*;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class FfmApiImpl implements FfmApi {
     private static final Linker LINKER = Linker.nativeLinker();
@@ -23,6 +25,15 @@ public class FfmApiImpl implements FfmApi {
     private static void upcall(MemorySegment segment) {
         var message = segment.getString(0);
         System.out.println("Upcall: " + message);
+    }
+
+    private static void loadDll(Path dllPath) {
+        if (dllPath != null && Files.exists(dllPath) && dllPath.toString().endsWith(".dll")) {
+            System.load(dllPath.toString());
+            System.out.println("Loaded dll: " + dllPath);
+        } else {
+            throw new IllegalArgumentException("invalid dll: " + dllPath);
+        }
     }
 
     private final Arena session;
@@ -45,11 +56,10 @@ public class FfmApiImpl implements FfmApi {
 
     private final MemorySegment upcallStub;
 
-    public FfmApiImpl(Arena session) {
+    public FfmApiImpl(Arena session, Path dllPath) {
         this.session = session;
+        loadDll(dllPath);
 
-        var dir = System.getProperty("user.dir");
-        System.load(dir + "/build-native/Debug/ffm.dll");
         this.printHelloNative = LINKER.downcallHandle(loadSymbol("printHello"), FunctionDescriptor.ofVoid());
         this.passHelloNative = LINKER.downcallHandle(loadSymbol("passHello"), FunctionDescriptor.ofVoid(
                 ValueLayout.ADDRESS));

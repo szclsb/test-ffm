@@ -36,6 +36,7 @@
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
+                        <!-- define config inside execution, otherwise MEAT-INF/services will not be present in jar -->
                         <configuration>
                             <outputDirectory>${app.providers}</outputDirectory>
                             <resources>

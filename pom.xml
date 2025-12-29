@@ -29,6 +29,8 @@
                 <version>3.6.3</version>
                 <executions>
                     <execution>
+                        <id>build-native</id>
+                        <phase>compile</phase>
                         <goals>
                             <goal>exec</goal>
                         </goals>

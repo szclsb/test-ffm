@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ServiceLoader;
 
-public class SpiLoader implements AutoCloseable {
+public class ServiceProviderManager implements AutoCloseable {
     private final URLClassLoader classLoader;
 
-    public SpiLoader() throws IOException, URISyntaxException {
-        var directory = Path.of(SpiLoader.class.getClassLoader().getResource("providers").toURI());
+    public ServiceProviderManager() throws IOException, URISyntaxException {
+        var directory = Path.of(ServiceProviderManager.class.getClassLoader().getResource("providers").toURI());
         try (var fileStream = Files.list(directory)) {
             var urls = fileStream
                     .map(path -> {
@@ -31,14 +31,14 @@ public class SpiLoader implements AutoCloseable {
         }
     }
 
-    public List<FfmApiProvider> providers() {
-        var result = new ArrayList<FfmApiProvider>();
-        var providers = ServiceLoader.load(FfmApiProvider.class, classLoader);
+    public List<FfmServiceProvider> loadServiceProviders() {
+        var result = new ArrayList<FfmServiceProvider>();
+        var providers = ServiceLoader.load(FfmServiceProvider.class, classLoader);
         for (var provider : providers) {
             result.add(provider);
         }
         if (result.isEmpty()) {
-            throw new ProviderNotFoundException(FfmApiProvider.class.getName());
+            throw new ProviderNotFoundException(FfmServiceProvider.class.getName());
         }
         return result;
     }

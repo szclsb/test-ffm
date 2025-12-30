@@ -8,7 +8,7 @@ import ch.szclsb.test.ffm.impl.ForeignFactoryImpl;
 import java.lang.foreign.Arena;
 import java.nio.file.Path;
 
-public class FfmApiProviderImpl implements FfmApiProvider {
+public class FfmServiceProviderImpl implements FfmServiceProvider {
     @Override
     public ForeignFactory getFactory(Arena factorySession) {
         return new ForeignFactoryImpl(factorySession);

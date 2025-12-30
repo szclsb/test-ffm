@@ -6,16 +6,22 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class Main {
-    private static Path dllPath() {
-        return Paths.get(System.getProperty("user.dir"), "build-native", "Debug", "ffm.dll");
-    }
+    private static final Path API_DLL_PATH = Paths.get(System.getProperty("user.dir"),
+            "build-native", "Debug", "ffm.dll");
 
     static void main(String[] args) throws Throwable {
-        try (var spiLoader = new SpiLoader();
-             var session = Arena.ofShared()) {
-            var provider = spiLoader.providers().getFirst();
-            var factory = provider.getFactory(session);
-            var api = provider.getApi(dllPath(), session, factory);
+        try(var serviceProviderManager = new ServiceProviderManager()) {
+            var availableServiceProviders = serviceProviderManager.loadServiceProviders();
+            var serviceProvider = availableServiceProviders.getFirst();
+
+            testFfm(serviceProvider);  // serviceProviderManager may be closed after this method
+        }
+    }
+
+    private static void testFfm(FfmServiceProvider serviceProvider) throws Throwable {
+        try (var session = Arena.ofShared()) {
+            var factory = serviceProvider.getFactory(session);
+            var api = serviceProvider.getApi(API_DLL_PATH, session, factory);
 
             api.printHello();
 
@@ -51,9 +57,7 @@ public class Main {
             var p1b = factory.allocatePoint();
             p1b.setX(4);
             p1b.setY(3);
-            var p2b = factory.allocatePoint();
-            p2b.setX(1);
-            p2b.setY(2);
+            var p2b = factory.allocatePoint(1, 2);
             var p3b = api.pointAdd(p1b, p2b);
             System.out.printf("r{%d, %d}%n", p3b.getX(), p3b.getY());
 

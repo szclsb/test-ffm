@@ -6,7 +6,7 @@ import ch.szclsb.test.ffm.api.ForeignFactory;
 import java.lang.foreign.Arena;
 import java.nio.file.Path;
 
-public interface FfmApiProvider {
+public interface FfmServiceProvider {
     ForeignFactory getFactory(Arena factorySession);
 
     FfmApi getApi(Path apiDllPath, Arena apiSession, ForeignFactory factory);

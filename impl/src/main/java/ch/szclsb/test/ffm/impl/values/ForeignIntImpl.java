@@ -11,7 +11,7 @@ import java.lang.foreign.SegmentAllocator;
  * Handles int pointer
  */
 public class ForeignIntImpl extends BaseSegment implements ForeignInt {
-    private ForeignIntImpl(MemorySegment memorySegment) {
+    public ForeignIntImpl(MemorySegment memorySegment) {
         super(memorySegment);
     }
 
@@ -23,13 +23,5 @@ public class ForeignIntImpl extends BaseSegment implements ForeignInt {
     @Override
     public void setValue(int value) {
         segment.set(LAYOUT, 0, value);
-    }
-
-    public static ForeignInt allocate(SegmentAllocator allocator) {
-        return new ForeignIntImpl(allocator.allocate(LAYOUT));
-    }
-
-    public static ForeignInt read(Address<ForeignInt> address) {
-        return new ForeignIntImpl(address.getSegment().reinterpret(LAYOUT.byteSize()));
     }
 }

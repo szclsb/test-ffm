@@ -14,8 +14,8 @@ public class Main {
         try (var spiLoader = new SpiLoader();
              var session = Arena.ofShared()) {
             var provider = spiLoader.providers().getFirst();
-            var api = provider.getApi(session, dllPath());
             var factory = provider.getFactory(session);
+            var api = provider.getApi(dllPath(), session, factory);
 
             api.printHello();
 

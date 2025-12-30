@@ -1,13 +1,12 @@
 package ch.szclsb.test.ffm.impl.vectors;
 
-import ch.szclsb.test.ffm.api.Address;
 import ch.szclsb.test.ffm.api.vectors.ForeignVec4;
 import ch.szclsb.test.ffm.impl.BaseSegment;
 
 import java.lang.foreign.*;
 
 public class ForeignVec4Impl extends BaseSegment implements ForeignVec4 {
-    private ForeignVec4Impl(MemorySegment memorySegment) {
+    public ForeignVec4Impl(MemorySegment memorySegment) {
         super(memorySegment);
     }
 
@@ -62,14 +61,6 @@ public class ForeignVec4Impl extends BaseSegment implements ForeignVec4 {
     @Override
     public float[] toArray() {
         return segment.toArray(VALUE_LAYOUT);
-    }
-
-    public static ForeignVec4 allocate(SegmentAllocator allocator) {
-        return new ForeignVec4Impl(allocator.allocate(LAYOUT));
-    }
-
-    public static ForeignVec4 read(Address<ForeignVec4> address) {
-        return new ForeignVec4Impl(address.getSegment().reinterpret(LAYOUT.byteSize()));
     }
 
 }

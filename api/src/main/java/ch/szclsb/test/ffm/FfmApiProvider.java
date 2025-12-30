@@ -7,7 +7,7 @@ import java.lang.foreign.Arena;
 import java.nio.file.Path;
 
 public interface FfmApiProvider {
-    FfmApi getApi(Arena session, Path dllPath);
+    ForeignFactory getFactory(Arena factorySession);
 
-    ForeignFactory getFactory(Arena session);
+    FfmApi getApi(Path apiDllPath, Arena apiSession, ForeignFactory factory);
 }

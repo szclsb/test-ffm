@@ -10,12 +10,12 @@ import java.nio.file.Path;
 
 public class FfmApiProviderImpl implements FfmApiProvider {
     @Override
-    public FfmApi getApi(Arena session, Path dllPath) {
-        return new FfmApiImpl(session, dllPath);
+    public ForeignFactory getFactory(Arena factorySession) {
+        return new ForeignFactoryImpl(factorySession);
     }
 
     @Override
-    public ForeignFactory getFactory(Arena session) {
-        return new ForeignFactoryImpl(session);
+    public FfmApi getApi(Path apiDllPath, Arena apiSession, ForeignFactory factory) {
+        return new FfmApiImpl(apiDllPath, apiSession, factory);
     }
 }

@@ -13,6 +13,8 @@ import ch.szclsb.test.ffm.impl.values.ForeignIntImpl;
 import ch.szclsb.test.ffm.impl.vectors.ForeignVec4Impl;
 
 import java.lang.foreign.Arena;
+import java.lang.foreign.MemoryLayout;
+import java.lang.foreign.MemorySegment;
 
 public class ForeignFactoryImpl implements ForeignFactory {
     private final Arena session;
@@ -21,9 +23,18 @@ public class ForeignFactoryImpl implements ForeignFactory {
         this.session = session;
     }
 
+    private MemorySegment allocate(MemoryLayout layout) {
+        return session.allocate(layout);
+    }
+
+    private MemorySegment reinterpret(Address<?> address, MemoryLayout layout) {
+        return address.getSegment().reinterpret(layout.byteSize());
+    }
+
     @Override
     public <T extends HasAddress<?>> AddressPointer<T> allocatePointer() {
-        return AddressPointerImpl.allocate(session);
+        var segment = allocate(AddressPointer.LAYOUT);
+        return new AddressPointerImpl<>(segment);
     }
 
     @Override
@@ -35,7 +46,8 @@ public class ForeignFactoryImpl implements ForeignFactory {
 
     @Override
     public ForeignInt allocateInt() {
-        return ForeignIntImpl.allocate(session);
+        var segment = allocate(ForeignInt.LAYOUT);
+        return new ForeignIntImpl(segment);
     }
 
     @Override
@@ -47,12 +59,14 @@ public class ForeignFactoryImpl implements ForeignFactory {
 
     @Override
     public ForeignInt readInt(Address<ForeignInt> address) {
-        return ForeignIntImpl.read(address);
+        var segment = reinterpret(address, ForeignInt.LAYOUT);
+        return new ForeignIntImpl(segment);
     }
 
     @Override
     public ForeignPoint allocatePoint() {
-        return ForeignPointImpl.allocate(session);
+        var segment = allocate(ForeignPoint.LAYOUT);
+        return new ForeignPointImpl(segment);
     }
 
     @Override
@@ -65,23 +79,26 @@ public class ForeignFactoryImpl implements ForeignFactory {
 
     @Override
     public ForeignPoint readPoint(Address<ForeignPoint> address) {
-        return ForeignPointImpl.read(address);
+        var segment = reinterpret(address, ForeignPoint.LAYOUT);
+        return new ForeignPointImpl(segment);
     }
 
     @Override
     public ForeignVec4 allocateVec4() {
-        return ForeignVec4Impl.allocate(session);
+        var segment = allocate(ForeignVec4.LAYOUT);
+        return new ForeignVec4Impl(segment);
     }
 
     @Override
     public ForeignVec4 allocateVec4(float x, float y, float z, float w) {
-        var vec4 = ForeignVec4Impl.allocate(session);
+        var vec4 = allocateVec4();
         vec4.setValues(x, y, z, w);
         return vec4;
     }
 
     @Override
     public ForeignVec4 readVec4(Address<ForeignVec4> address) {
-        return ForeignVec4Impl.read(address);
+        var segment = reinterpret(address, ForeignVec4.LAYOUT);
+        return new ForeignVec4Impl(segment);
     }
 }

@@ -1,6 +1,7 @@
 package ch.szclsb.test.ffm.impl;
 
 import ch.szclsb.test.ffm.api.Address;
+import ch.szclsb.test.ffm.api.ForeignFactory;
 import ch.szclsb.test.ffm.api.pointer.AddressPointer;
 import ch.szclsb.test.ffm.api.FfmApi;
 import ch.szclsb.test.ffm.api.values.ForeignInt;
@@ -37,6 +38,7 @@ public class FfmApiImpl implements FfmApi {
     }
 
     private final Arena session;
+    private final ForeignFactory factory;
 
     private final MethodHandle printHelloNative;
     private final MethodHandle passHelloNative;
@@ -56,9 +58,10 @@ public class FfmApiImpl implements FfmApi {
 
     private final MemorySegment upcallStub;
 
-    public FfmApiImpl(Arena session, Path dllPath) {
-        this.session = session;
-        loadDll(dllPath);
+    public FfmApiImpl(Path apiDllPath, Arena apiSession, ForeignFactory factory) {
+        loadDll(apiDllPath);
+        this.session = apiSession;
+        this.factory = factory;
 
         this.printHelloNative = LINKER.downcallHandle(loadSymbol("printHello"), FunctionDescriptor.ofVoid());
         this.passHelloNative = LINKER.downcallHandle(loadSymbol("passHello"), FunctionDescriptor.ofVoid(
@@ -101,7 +104,7 @@ public class FfmApiImpl implements FfmApi {
         try {
             var upcallDescriptor = FunctionDescriptor.ofVoid(ValueLayout.ADDRESS.withTargetLayout(MemoryLayout.sequenceLayout(256, ValueLayout.JAVA_CHAR)));
             var methodHandle = MethodHandles.lookup().findStatic(FfmApiImpl.class, "upcall", upcallDescriptor.toMethodType());
-            this.upcallStub = LINKER.upcallStub(methodHandle, upcallDescriptor, session);
+            this.upcallStub = LINKER.upcallStub(methodHandle, upcallDescriptor, apiSession);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -154,7 +157,7 @@ public class FfmApiImpl implements FfmApi {
     public ForeignPoint pointAdd(ForeignPoint a, ForeignPoint b) throws Throwable {
         // note session is required as first arg
         var rSegment = (MemorySegment) pointAddNative.invoke(session, a.getSegment(), b.getSegment());
-        return ForeignPointImpl.read(() -> rSegment);
+        return factory.readPoint(() -> rSegment);
     }
 
     @Override

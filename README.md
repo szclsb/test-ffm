@@ -1,5 +1,15 @@
 # Java Foreign Function and Memory API TEST
 
+This project aims to showcase how *Java Foreign Function and Memory API (FFM)*
+can be used with *Java Service Provider Interface (SPI)* to call native *C* code.
+
+## Project structure
+
+- **app**: Test program, loads the service providers using *SPI*.
+- **api**: Provides the interfaces of the service providers.
+- **impl**: Implements the default service providers by calling native *C* code using *FFM*.
+- **foreign**: Implements the native C library and provides the `ffm.dll` using *CMake*. 
+
 ## Run Test Program
 
 * CLI:

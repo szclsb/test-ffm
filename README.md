@@ -8,7 +8,8 @@ can be used with *Java Service Provider Interface (SPI)* to call native *C* code
 - **app**: Test program, loads the service providers using *SPI*.
 - **api**: Provides the interfaces of the service providers.
 - **impl**: Implements the default service providers by calling native *C* code using *FFM*.
-- **foreign**: Implements the native C library and provides the `ffm.dll` using *CMake*. 
+- **foreign**: Implements the native C library and provides the `ffm.dll` using *CMake*.
+(*C* code is a mess, I'm sorry :/ )
 
 ## Run Test Program
 

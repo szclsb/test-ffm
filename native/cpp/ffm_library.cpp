@@ -75,3 +75,7 @@ void increment_p_int(int* pValue) {
 void increment_pp_int(int** ppValue) {
     increment_p_int(*ppValue);
 }
+
+void increment_ppp_int(int*** pppValue) {
+    increment_pp_int(*pppValue);
+}

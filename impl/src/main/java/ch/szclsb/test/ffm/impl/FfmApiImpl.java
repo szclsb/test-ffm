@@ -1,8 +1,8 @@
 package ch.szclsb.test.ffm.impl;
 
-import ch.szclsb.test.ffm.api.Address;
 import ch.szclsb.test.ffm.api.ForeignFactory;
-import ch.szclsb.test.ffm.api.pointer.AddressPointer;
+import ch.szclsb.test.ffm.api.ForeignObject;
+import ch.szclsb.test.ffm.api.pointer.ForeignPointer;
 import ch.szclsb.test.ffm.api.FfmApi;
 import ch.szclsb.test.ffm.api.values.ForeignInt;
 import ch.szclsb.test.ffm.api.vectors.ForeignVec4;
@@ -55,6 +55,7 @@ public class FfmApiImpl implements FfmApi {
     private final MethodHandle increment_int_native;
     private final MethodHandle increment_p_int_native;
     private final MethodHandle increment_pp_int_native;
+    private final MethodHandle increment_ppp_int_native;
 
     private final MemorySegment upcallStub;
 
@@ -98,6 +99,9 @@ public class FfmApiImpl implements FfmApi {
                 ValueLayout.ADDRESS
         ));
         this.increment_pp_int_native = LINKER.downcallHandle(loadSymbol("increment_pp_int"), FunctionDescriptor.ofVoid(
+                ValueLayout.ADDRESS
+        ));
+        this.increment_ppp_int_native = LINKER.downcallHandle(loadSymbol("increment_ppp_int"), FunctionDescriptor.ofVoid(
                 ValueLayout.ADDRESS
         ));
 
@@ -149,7 +153,7 @@ public class FfmApiImpl implements FfmApi {
     }
 
     @Override
-    public void pointAddRef(Address<ForeignPoint> a, Address<ForeignPoint> b, Address<ForeignPoint> r) throws Throwable {
+    public void pointAddRef(ForeignPoint a, ForeignPoint b, ForeignPoint r) throws Throwable {
         pointAddRefNative.invoke(a.getSegment(), b.getSegment(), r.getSegment());
     }
 
@@ -157,11 +161,11 @@ public class FfmApiImpl implements FfmApi {
     public ForeignPoint pointAdd(ForeignPoint a, ForeignPoint b) throws Throwable {
         // note session is required as first arg
         var rSegment = (MemorySegment) pointAddNative.invoke(session, a.getSegment(), b.getSegment());
-        return factory.readPoint(() -> rSegment);
+        return new ForeignPointImpl(rSegment);
     }
 
     @Override
-    public Address<?> createInstance(int a, int b) throws Throwable {
+    public ForeignObject createInstance(int a, int b) throws Throwable {
         var pSegment = session.allocate(ValueLayout.ADDRESS);
         createInstanceNative.invoke(a, b, pSegment);
         var segment = pSegment.get(ValueLayout.ADDRESS, 0);
@@ -169,12 +173,12 @@ public class FfmApiImpl implements FfmApi {
     }
 
     @Override
-    public void useInstance(Address<?> instance) throws Throwable {
+    public void useInstance(ForeignObject instance) throws Throwable {
         useInstanceNative.invoke(instance.getSegment());
     }
 
     @Override
-    public void destroyInstance(Address<?> instance) throws Throwable {
+    public void destroyInstance(ForeignObject instance) throws Throwable {
         destroyInstanceNative.invoke(instance.getSegment());
     }
 
@@ -185,12 +189,17 @@ public class FfmApiImpl implements FfmApi {
 
     @Override
     public void incrementPInt(ForeignInt pValue) throws Throwable {
-        var segment = pValue.getAddress().getSegment();
+        var segment = pValue.getSegment();
         increment_p_int_native.invoke(segment);
     }
 
     @Override
-    public void incrementPpInt(AddressPointer<ForeignInt> ppValue) throws Throwable {
+    public void incrementPpInt(ForeignPointer<ForeignInt> ppValue) throws Throwable {
         increment_pp_int_native.invoke(ppValue.getSegment());
+    }
+
+    @Override
+    public void incrementPppInt(ForeignPointer<ForeignPointer<ForeignInt>> pppValue) throws Throwable {
+        increment_ppp_int_native.invoke(pppValue.getSegment());
     }
 }

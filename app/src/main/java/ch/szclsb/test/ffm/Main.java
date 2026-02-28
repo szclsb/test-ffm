@@ -1,5 +1,9 @@
 package ch.szclsb.test.ffm;
 
+import ch.szclsb.test.ffm.api.TargetType;
+import ch.szclsb.test.ffm.api.pointer.ForeignPointer;
+import ch.szclsb.test.ffm.api.values.ForeignInt;
+
 import java.lang.foreign.Arena;
 import java.lang.foreign.ValueLayout;
 import java.nio.file.Path;
@@ -51,7 +55,7 @@ public class Main {
             var p1a = factory.allocatePoint(1, 2);
             var p2a = factory.allocatePoint(3, 4);
             var p3a = factory.allocatePoint();
-            api.pointAddRef(p1a.getAddress(), p2a.getAddress(), p3a.getAddress());
+            api.pointAddRef(p1a, p2a, p3a);
             System.out.printf("r{%d, %d}%n", p3a.getX(), p3a.getY());
 
             var p1b = factory.allocatePoint();
@@ -72,10 +76,21 @@ public class Main {
             api.incrementPInt(inc2);
             System.out.printf("inc2 of 42 is %d%n", inc2.getValue());
 
-            var inc3 = factory.reference(factory.allocateInt(52).getAddress());
-            //inc3.reference(inc2);
+            var inc3 = factory.allocatePointer(new TargetType<ForeignInt>() {});
+            inc3.reference(factory.allocateInt(52));
             api.incrementPpInt(inc3);
-            System.out.printf("inc3 of 52 is %d%n", factory.readInt(inc3.dereference()).getValue());
+            System.out.printf("inc3 of 52 is %d%n", inc3.dereference().getValue());
+
+            var inc4 = factory.allocatePointer(new TargetType<ForeignPointer<ForeignInt>>() {});
+            var inc4_1 = factory.allocatePointer(new TargetType<ForeignInt>() {});
+            var inc4_2 = factory.allocateInt(53);
+            inc4.reference(inc4_1);
+            inc4_1.reference(inc4_2);
+            api.incrementPppInt(inc4);
+
+            var x1 = inc4.dereference();
+            var x2 = x1.dereference();
+            System.out.printf("inc4 of 53 is %d%n", x2.getValue());
         }
     }
 }

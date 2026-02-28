@@ -40,4 +40,6 @@ extern "C" {
     __declspec(dllexport) void increment_p_int(int* pValue);
 
     __declspec(dllexport) void increment_pp_int(int** ppValue);
+
+    __declspec(dllexport) void increment_ppp_int(int*** pppValue);
 }

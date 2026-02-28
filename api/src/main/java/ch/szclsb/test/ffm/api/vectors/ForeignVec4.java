@@ -1,11 +1,11 @@
 package ch.szclsb.test.ffm.api.vectors;
 
-import ch.szclsb.test.ffm.api.HasAddress;
+import ch.szclsb.test.ffm.api.ForeignObject;
 
 import java.lang.foreign.MemoryLayout;
 import java.lang.foreign.ValueLayout;
 
-public interface ForeignVec4 extends HasAddress<ForeignVec4> {
+public interface ForeignVec4 extends ForeignObject {
     ValueLayout.OfFloat VALUE_LAYOUT = ValueLayout.JAVA_FLOAT;
     MemoryLayout LAYOUT = MemoryLayout.sequenceLayout(4, VALUE_LAYOUT);
 

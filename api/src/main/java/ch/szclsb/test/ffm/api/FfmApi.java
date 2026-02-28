@@ -1,6 +1,6 @@
 package ch.szclsb.test.ffm.api;
 
-import ch.szclsb.test.ffm.api.pointer.AddressPointer;
+import ch.szclsb.test.ffm.api.pointer.ForeignPointer;
 import ch.szclsb.test.ffm.api.structs.ForeignPoint;
 import ch.szclsb.test.ffm.api.values.ForeignInt;
 import ch.szclsb.test.ffm.api.vectors.ForeignVec4;
@@ -22,19 +22,21 @@ public interface FfmApi {
 
     void vec4add(final ForeignVec4 a, final ForeignVec4 b, ForeignVec4 r) throws Throwable;
 
-    void pointAddRef(final Address<ForeignPoint> a, final Address<ForeignPoint> b, Address<ForeignPoint> r) throws Throwable;
+    void pointAddRef(final ForeignPoint a, final ForeignPoint b, ForeignPoint r) throws Throwable;
 
     ForeignPoint pointAdd(final ForeignPoint a, final ForeignPoint b) throws Throwable;
 
-    Address<?> createInstance(final int a, final int b) throws Throwable;
+    ForeignObject createInstance(final int a, final int b) throws Throwable;
 
-    void useInstance(Address<?> instance) throws Throwable;
+    void useInstance(ForeignObject instance) throws Throwable;
 
-    void destroyInstance(Address<?> instance) throws Throwable;
+    void destroyInstance(ForeignObject instance) throws Throwable;
 
     int incrementInt(int value) throws Throwable;
 
     void incrementPInt(ForeignInt pValue) throws Throwable;
 
-    void incrementPpInt(AddressPointer<ForeignInt> ppValue) throws Throwable;
+    void incrementPpInt(ForeignPointer<ForeignInt> ppValue) throws Throwable;
+
+    void incrementPppInt(ForeignPointer<ForeignPointer<ForeignInt>> pppValue) throws Throwable;
 }

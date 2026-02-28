@@ -2,6 +2,6 @@ package ch.szclsb.test.ffm.api;
 
 import java.lang.foreign.MemorySegment;
 
-public interface HasSegment {
+public interface ForeignObject {
     MemorySegment getSegment();
 }

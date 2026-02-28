@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 
 public class Main {
     private static final Path API_DLL_PATH = Paths.get(System.getProperty("user.dir"),
-            "build-native", "Debug", "ffm.dll");
+            "foreign", "build-native", "Debug", "ffm.dll");
 
     static void main(String[] args) throws Throwable {
         try(var serviceProviderManager = new ServiceProviderManager()) {

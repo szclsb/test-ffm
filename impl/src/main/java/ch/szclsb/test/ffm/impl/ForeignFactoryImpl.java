@@ -17,43 +17,42 @@ import java.lang.foreign.MemoryLayout;
 import java.lang.foreign.MemorySegment;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 public class ForeignFactoryImpl implements ForeignFactory {
-    private record ForeignDefinition<T>(
-            MemoryLayout targetLayout,
+    private record ForeignTypeInfo<T>(
+            MemoryLayout memoryLayout,
             BiFunction<MemorySegment, Type, ? extends T> dereferenceFunction
     ) {
+        ForeignTypeInfo(MemoryLayout targetLayout,
+                        Function<MemorySegment, ? extends T> dereferenceFunction) {
+            this(targetLayout, (segment, _) -> dereferenceFunction.apply(segment));
+        }
     }
 
-    private static Map<Class<?>, ForeignDefinition<?>> dereferenceFunctions = registerTypes();
-    private static Map<Class<?>, ForeignDefinition<?>> registerTypes() {
-        var map = new HashMap<Class<?>, ForeignDefinition<?>>();
-        map.put(ForeignPointer.class, new ForeignDefinition<ForeignPointer<?>>(ForeignPointer.LAYOUT, (segment, type) -> {
-            var innerType = ((ParameterizedType) type).getActualTypeArguments()[0];  // access inner type of ForeignPointer
-            return allocatePointer(segment, innerType);
+    private static final Map<Type, ForeignTypeInfo<?>> foreignTypeRegister = Collections.unmodifiableMap(registerTypes());
+
+    private static Map<Type, ForeignTypeInfo<?>> registerTypes() {
+        var map = new HashMap<Type, ForeignTypeInfo<?>>();
+        map.put(ForeignPointer.class, new ForeignTypeInfo<ForeignPointer<?>>(ForeignPointer.LAYOUT, (segment, type) -> {
+            var innerType = ((ParameterizedType) type).getActualTypeArguments()[0];  // access inner type R of ForeignPointer<R>
+            return createPointer(segment, innerType);
         }));
-        map.put(ForeignInt.class, new ForeignDefinition<ForeignInt>(ForeignInt.LAYOUT, (segment, type) -> new ForeignIntImpl(segment)));
-        map.put(ForeignPoint.class, new ForeignDefinition<ForeignPoint>(ForeignPoint.LAYOUT, (segment, type) -> new ForeignPointImpl(segment)));
-        map.put(ForeignVec4.class, new ForeignDefinition<ForeignVec4>(ForeignVec4.LAYOUT, (segment, type) -> new ForeignVec4Impl(segment)));
+        map.put(ForeignInt.class, new ForeignTypeInfo<ForeignInt>(ForeignInt.LAYOUT, ForeignIntImpl::new));
+        map.put(ForeignPoint.class, new ForeignTypeInfo<ForeignPoint>(ForeignPoint.LAYOUT, ForeignPointImpl::new));
+        map.put(ForeignVec4.class, new ForeignTypeInfo<ForeignVec4>(ForeignVec4.LAYOUT, ForeignVec4Impl::new));
         return map;
     }
 
-    private static Type getOuterType(Type type) {
-        if (type instanceof ParameterizedType pType) {
-            return pType.getRawType();
-        }
-
-        return type;
-    }
-
-    public static MemoryLayout getLayout(Class<? extends ForeignObject> foreignClass) {
-        return Optional.ofNullable(dereferenceFunctions.get(foreignClass))
-                .map(ForeignDefinition::targetLayout)
-                .orElse(null);
+    public static MemoryLayout getMemoryLayout(Class<? extends ForeignObject> foreignClass) {
+        return Optional.ofNullable(foreignTypeRegister.get(foreignClass))
+                .map(ForeignTypeInfo::memoryLayout)
+                .orElseThrow(() -> new RuntimeException("foreign class %s is not registered".formatted(foreignClass.getCanonicalName())));
     }
 
     private final Arena session;
@@ -69,14 +68,21 @@ public class ForeignFactoryImpl implements ForeignFactory {
     @Override
     public <T extends ForeignObject> ForeignPointer<T> allocatePointer(TargetType<T> targetType) {
         var segment = allocate(ForeignPointer.LAYOUT);
-        return allocatePointer(segment, targetType.getType());
+        return createPointer(segment, targetType.getType());
     }
 
-    private static <T extends ForeignObject> ForeignPointerImpl<T> allocatePointer(MemorySegment segment, Type targetType) {
-        var rawType = getOuterType(targetType);  // access raw type to retrieve dereference function
-        var dereferenceFunction = (ForeignDefinition<T>) dereferenceFunctions.get(rawType);
-        return new ForeignPointerImpl<>(segment, dereferenceFunction.targetLayout, refSegment ->
-                dereferenceFunction.dereferenceFunction().apply(refSegment, targetType));
+    @SuppressWarnings("unchecked")
+    private static <T extends ForeignObject> ForeignPointerImpl<T> createPointer(MemorySegment segment, Type targetType) {
+        var targetOuterType = outer(targetType);
+        var targetTypeInfo = (ForeignTypeInfo<T>) foreignTypeRegister.get(targetOuterType);
+        return new ForeignPointerImpl<>(segment, targetTypeInfo.memoryLayout, refSegment ->
+                targetTypeInfo.dereferenceFunction().apply(refSegment, targetType));  // use targetType - not targetOuterType, otherwise inner type info will be lost.
+    }
+
+    private static Type outer(Type type) {
+        return type instanceof ParameterizedType pType
+                ? pType.getRawType()
+                : type;
     }
 
     @Override

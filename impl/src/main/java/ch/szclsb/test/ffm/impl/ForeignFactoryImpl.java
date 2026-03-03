@@ -21,17 +21,15 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class ForeignFactoryImpl implements ForeignFactory {
-    private record ForeignTypeInfo<T>(
+    private record ForeignTypeInfo<T extends ForeignObject>(
             MemoryLayout memoryLayout,
-            BiFunction<MemorySegment, Type, ? extends T> dereferenceFunction
+            DereferenceFunction<? extends T> dereferenceFunction
     ) {
-        ForeignTypeInfo(MemoryLayout targetLayout,
-                        Function<MemorySegment, ? extends T> dereferenceFunction) {
-            this(targetLayout, (segment, _) -> dereferenceFunction.apply(segment));
+        public ForeignTypeInfo(MemoryLayout memoryLayout, Function<MemorySegment, ? extends T> dereferenceFunction) {
+            this(memoryLayout, (segment, _, _) -> dereferenceFunction.apply(segment));
         }
     }
 
@@ -39,10 +37,8 @@ public class ForeignFactoryImpl implements ForeignFactory {
 
     private static Map<Type, ForeignTypeInfo<?>> registerTypes() {
         var map = new HashMap<Type, ForeignTypeInfo<?>>();
-        map.put(ForeignPointer.class, new ForeignTypeInfo<ForeignPointer<?>>(ForeignPointer.LAYOUT, (segment, type) -> {
-            var innerType = ((ParameterizedType) type).getActualTypeArguments()[0];  // access inner type R of ForeignPointer<R>
-            return createPointer(segment, innerType);
-        }));
+        map.put(ForeignPointer.class, new ForeignTypeInfo<ForeignPointer<?>>(ForeignPointer.LAYOUT,
+                (refSegment, pointerCount, refClass) -> createPointer(refSegment, pointerCount - 1, refClass)));
         map.put(ForeignInt.class, new ForeignTypeInfo<ForeignInt>(ForeignInt.LAYOUT, ForeignIntImpl::new));
         map.put(ForeignPoint.class, new ForeignTypeInfo<ForeignPoint>(ForeignPoint.LAYOUT, ForeignPointImpl::new));
         map.put(ForeignVec4.class, new ForeignTypeInfo<ForeignVec4>(ForeignVec4.LAYOUT, ForeignVec4Impl::new));
@@ -68,21 +64,24 @@ public class ForeignFactoryImpl implements ForeignFactory {
     @Override
     public <T extends ForeignObject> ForeignPointer<T> allocatePointer(TargetType<T> targetType) {
         var segment = allocate(ForeignPointer.LAYOUT);
-        return createPointer(segment, targetType.getType());
+
+        var pointerCount = 1;
+        var type = targetType.getType();
+        // resolve pointer to pointer constructs at allocation time, saves time at dereferencing
+        while (type instanceof ParameterizedType pType && pType.getRawType() == ForeignPointer.class) {
+            type = pType.getActualTypeArguments()[0];
+            pointerCount++;
+        }
+
+        return createPointer(segment, pointerCount, type);
     }
 
     @SuppressWarnings("unchecked")
-    private static <T extends ForeignObject> ForeignPointerImpl<T> createPointer(MemorySegment segment, Type targetType) {
-        var targetOuterType = outer(targetType);
-        var targetTypeInfo = (ForeignTypeInfo<T>) foreignTypeRegister.get(targetOuterType);
+    private static <T extends ForeignObject> ForeignPointerImpl<T> createPointer(MemorySegment segment, int pointerCount, Type refType) {
+        var targetType = pointerCount > 1 ? ForeignPointer.class : refType;
+        var targetTypeInfo = (ForeignTypeInfo<T>) foreignTypeRegister.get(targetType);
         return new ForeignPointerImpl<>(segment, targetTypeInfo.memoryLayout, refSegment ->
-                targetTypeInfo.dereferenceFunction().apply(refSegment, targetType));  // use targetType - not targetOuterType, otherwise inner type info will be lost.
-    }
-
-    private static Type outer(Type type) {
-        return type instanceof ParameterizedType pType
-                ? pType.getRawType()
-                : type;
+                targetTypeInfo.dereferenceFunction().apply(refSegment, pointerCount, refType));  // use refType - not targetType.
     }
 
     @Override
